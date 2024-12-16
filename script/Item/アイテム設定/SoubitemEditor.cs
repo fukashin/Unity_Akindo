@@ -22,6 +22,7 @@ public class EquipItemEditor : Editor
         EditorGUI.EndDisabledGroup();
 
         equipItem.相場 = EditorGUILayout.IntField("相場", equipItem.相場);
+        equipItem.需要 = EditorGUILayout.IntField("需要", equipItem.需要);
         equipItem.商品画像 = (Sprite)EditorGUILayout.ObjectField("商品画像", equipItem.商品画像, typeof(Sprite), false);
 
         equipItem.攻撃力 = EditorGUILayout.IntField("攻撃力", equipItem.攻撃力);
