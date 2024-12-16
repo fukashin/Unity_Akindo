@@ -28,10 +28,8 @@ public class NormalItemEditor : Editor
         EditorGUI.EndDisabledGroup();
 
         // 所持数や価格など他のパラメータ入力
-        normalItem.所持数 = EditorGUILayout.IntField("所持数", normalItem.所持数);
-        normalItem.価格 = EditorGUILayout.IntField("価格", normalItem.価格);
+        normalItem.相場 = EditorGUILayout.IntField("相場", normalItem.相場);
         normalItem.需要 = EditorGUILayout.IntField("需要", normalItem.需要);
-        normalItem.熟練度 = EditorGUILayout.FloatField("熟練度", normalItem.熟練度);
         normalItem.商品画像 = (Sprite)EditorGUILayout.ObjectField("商品画像", normalItem.商品画像, typeof(Sprite), false);
 
         // 必要素材リスト

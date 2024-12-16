@@ -26,8 +26,6 @@ void DisplayItems()
     // アイテムデータを表示
     foreach (NormalItem item in itemDatabase.通常アイテムリスト)
     {
-        if (item.所持数 > 0)
-        {
             GameObject row = Instantiate(itemRowPrefab, contentParent);
 
             Behaviour[] components = row.GetComponentsInChildren<Behaviour>(true);
@@ -44,13 +42,9 @@ void DisplayItems()
             itemNameText.enabled = true; // コンポーネントを有効化
             itemNameText.text = item.商品名;
 
-            TMP_Text quantityText = row.transform.Find("Quantity").GetComponent<TMP_Text>();
-            quantityText.enabled = true;
-            quantityText.text = item.所持数.ToString();
-
             TMP_Text priceText = row.transform.Find("Price").GetComponent<TMP_Text>();
             priceText.enabled = true;
-            priceText.text = item.価格.ToString() + " G";
+            priceText.text = item.相場.ToString() + " G";
 
             TMP_Text itemTypeText = row.transform.Find("ItemType").GetComponent<TMP_Text>();
             itemTypeText.enabled = true;
@@ -67,7 +61,6 @@ void DisplayItems()
             {
                 Debug.LogWarning($"Item '{item.商品名}' の商品画像が設定されていません！デフォルト画像を表示します。");
                 itemImage.sprite = defaultSprite;
-            }
             }
         }
     }

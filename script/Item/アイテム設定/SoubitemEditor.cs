@@ -21,10 +21,7 @@ public class EquipItemEditor : Editor
         equipItem.大分類 = (ItemType)EditorGUILayout.ObjectField("大分類", equipItem.大分類, typeof(ItemType), false);
         EditorGUI.EndDisabledGroup();
 
-        equipItem.所持数 = EditorGUILayout.IntField("所持数", equipItem.所持数);
-        equipItem.価格 = EditorGUILayout.IntField("価格", equipItem.価格);
-        equipItem.需要 = EditorGUILayout.IntField("需要", equipItem.需要);
-        equipItem.熟練度 = EditorGUILayout.FloatField("熟練度", equipItem.熟練度);
+        equipItem.相場 = EditorGUILayout.IntField("相場", equipItem.相場);
         equipItem.商品画像 = (Sprite)EditorGUILayout.ObjectField("商品画像", equipItem.商品画像, typeof(Sprite), false);
 
         equipItem.攻撃力 = EditorGUILayout.IntField("攻撃力", equipItem.攻撃力);
