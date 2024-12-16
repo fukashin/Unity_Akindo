@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class BaseItem : ScriptableObject
 {
-    public string 商品名;          // 商品名
+
+    public int ID;          // プライマリキー
+    public string 商品名;    // 商品名
     public ItemType 大分類;  //アイテム種別
     public ItemType2 小分類;  //種類
     public int 所持数;             // 所持数
