@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80e61a55711c31240af2be88fbd6e9c2, type: 3}
-  m_Name: "\u305D\u306E\u8FBA\u306E\u8349"
+  m_Name: "\u76AE"
   m_EditorClassIdentifier: 
-  "\u5546\u54C1\u540D": "\u305D\u306E\u8FBA\u306E\u8349"
-  "\u5927\u5206\u985E": {fileID: 11400000, guid: c5d3110c5c2153e4ca03c892faa9842d, type: 2}
-  "\u5C0F\u5206\u985E": {fileID: 11400000, guid: 15ce2507027ea114bab2bad52fc6c105, type: 2}
-  "\u6240\u6301\u6570": 2
-  "\u4FA1\u683C": 1
+  ID: 0
+  "\u5546\u54C1\u540D": "\u76AE"
+  "\u5927\u5206\u985E": {fileID: 0}
+  "\u5C0F\u5206\u985E": {fileID: 0}
+  "\u76F8\u5834": 0
   "\u9700\u8981": 0
-  "\u719F\u7DF4\u5EA6": 0
-  "\u5546\u54C1\u753B\u50CF": {fileID: 0}
+  "\u5546\u54C1\u753B\u50CF": {fileID: -5758736077942547638, guid: e78dfee119926a14fb505a2fbc017370,
+    type: 3}
   "\u5FC5\u8981\u7D20\u6750": []

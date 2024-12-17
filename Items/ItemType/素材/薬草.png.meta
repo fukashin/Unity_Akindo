@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9e91b4b55e5c19d42921fd6b5c18117a
+guid: 8653a184d74df2f4ebfde8f0fcd499d6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5559021556329382325
-    second: 2011-12-23_1-005_0
+      213: -452606618849389056
+    second: "\u85AC\u8349_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -84,7 +84,33 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+    buildTarget: Win64
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
     buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -100,12 +126,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 2011-12-23_1-005_0
+      name: "\u85AC\u8349_0"
       rect:
         serializedVersion: 2
-        x: 0
+        x: 4
         y: 0
-        width: 24
+        width: 18
         height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b4e7f34f8536ad2b0800000000000000
-      internalID: -5559021556329382325
+      spriteID: 006dd7c9da408b9f0800000000000000
+      internalID: -452606618849389056
       vertices: []
       indices: 
       edges: []
