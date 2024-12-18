@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BaseItem : ScriptableObject
 {
@@ -10,4 +11,13 @@ public class BaseItem : ScriptableObject
     public int 相場;               // 価格
     public int 需要;               // 需要
     public Sprite 商品画像;         // 商品画像
+
+    [System.Serializable]
+    public class MaterialRequirement
+    {
+        public BaseItem 素材;      // 素材アイテム
+        public int 必要数;         // 素材必要数
+    }
+
+    public List<MaterialRequirement> 必要素材; // 必要な素材リスト
 }
