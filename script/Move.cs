@@ -2,54 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipMove : MonoBehaviour
+public class CharacterController : MonoBehaviour
 {
-    public float walkSpeed = 3.0f;  // ’ÊíˆÚ“®‘¬“x
-    public float runSpeed = 6.0f;   // ƒVƒtƒg‰Ÿ‰º‚Ì‘–‚é‘¬“x
-    private Animator animator;      // AnimatorƒRƒ“ƒ|[ƒlƒ“ƒg
-    private Vector2 lastDirection;  // ÅŒã‚É“®‚¢‚½•ûŒü
+    public float speed = 3.0f;              // é€šå¸¸ã®ç§»å‹•é€Ÿåº¦
+    public float runMultiplier = 1.5f;      // èµ°ã‚‹ã¨ãã®é€Ÿåº¦å€ç‡
+    private Rigidbody2D rb;                 // Rigidbody2D ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+    private Vector2 inputAxis;              // å…¥åŠ›ã®æ–¹å‘
+    private bool isRunning;                 // èµ°ã£ã¦ã„ã‚‹ã‹ã®çŠ¶æ…‹
+    Animator anim;
 
     void Start()
     {
-        animator = GetComponent<Animator>(); // AnimatorƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
-        lastDirection = Vector2.down;        // ‰Šú’l‚Æ‚µ‚Ä‰º•ûŒü‚ğİ’è
+        rb = GetComponent<Rigidbody2D>();       // Rigidbody2D ã®å–å¾—
+        anim = GetComponent<Animator>();        // Animator ã®å–å¾—
     }
 
     void Update()
     {
-        // “ü—Íæ“¾
-        float x = Input.GetAxisRaw("Horizontal"); // ‰¡•ûŒü‚Ì“ü—Í
-        float y = Input.GetAxisRaw("Vertical");   // c•ûŒü‚Ì“ü—Í
+        // ç§»å‹•å…¥åŠ›ã‚’å–å¾—
+        inputAxis.x = Input.GetAxisRaw("Horizontal");
+        inputAxis.y = Input.GetAxisRaw("Vertical");
 
-        // ƒVƒtƒgƒL[‰Ÿ‰ºó‘Ô‚ğŠm”F
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        // ã‚·ãƒ•ãƒˆã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹ç¢ºèª
+        isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        // ˆÚ“®‘¬“x‚ğİ’è
-        float currentSpeed = isRunning ? runSpeed : walkSpeed;
+        // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®è¨­å®š
+        setAnim(inputAxis);
+    }
 
-        // ˆÚ“®•ûŒü‚ğŒvZ
-        Vector2 moveDirection = new Vector2(x, y).normalized;
+    private void FixedUpdate()
+    {
+        // ç§»å‹•é€Ÿåº¦ã‚’æ±ºå®š
+        float currentSpeed = isRunning ? speed * runMultiplier : speed;
 
-        // ƒLƒƒƒ‰ƒNƒ^[‚ÌˆÚ“®
-        transform.position += new Vector3(moveDirection.x, moveDirection.y, 0) * currentSpeed * Time.deltaTime;
+        // Rigidbody2D ã‚’ä½¿ã£ã¦ç§»å‹•
+        rb.linearVelocity = inputAxis.normalized * currentSpeed;
+    }
 
-        // ƒAƒjƒ[ƒVƒ‡ƒ“—p‚Ìƒtƒ‰ƒOİ’è
-        bool isMoving = moveDirection.magnitude > 0;
-
-        if (isMoving)
+    public void setAnim(Vector2 vec2)
+    {
+        if (vec2 == Vector2.zero)
         {
-            // ˆÚ“®‚µ‚Ä‚¢‚éê‡‚ÍŒü‚«‚ğXV
-            lastDirection = moveDirection;
-            animator.SetFloat("MoveX", moveDirection.x);
-            animator.SetFloat("MoveY", moveDirection.y);
+            anim.speed = 0.0f;    // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢
+            return;
         }
 
-        // ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌXV
-        animator.SetBool("IsMoving", isMoving);
-        animator.SetFloat("LastMoveX", lastDirection.x);
-        animator.SetFloat("LastMoveY", lastDirection.y);
-
-        // ‘–‚é‚©‚Ç‚¤‚©‚Ìó‘Ô‚ğƒAƒjƒ[ƒ^[‚É‘—M
-        animator.SetBool("IsRunning", isRunning);
+        anim.speed = 1.0f;        // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿ
+        anim.SetFloat("X", vec2.x);
+        anim.SetFloat("Y", vec2.y);
     }
 }
