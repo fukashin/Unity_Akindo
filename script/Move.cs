@@ -15,6 +15,10 @@ public class CharacterController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();       // Rigidbody2D の取得
         anim = GetComponent<Animator>();        // Animator の取得
+
+        // Rigidbody2D 設定の確認
+        rb.linearDamping = 0f;                           // 抵抗値を無効化
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
     void Update()
@@ -22,6 +26,12 @@ public class CharacterController : MonoBehaviour
         // 移動入力を取得
         inputAxis.x = Input.GetAxisRaw("Horizontal");
         inputAxis.y = Input.GetAxisRaw("Vertical");
+
+        // 小さな入力を無視
+        if (inputAxis.magnitude < 0.1f)
+        {
+            inputAxis = Vector2.zero;
+        }
 
         // シフトキーが押されているか確認
         isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
