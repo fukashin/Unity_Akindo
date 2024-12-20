@@ -50,5 +50,7 @@ public class IDManager : ScriptableObject
     {
         currentMaxID = 0;
         allItemIDs.Clear(); // 一覧をリセット
+        アイテムリスト.Clear(); // アイテムリストをリセット
     }
+
 }

@@ -18,6 +18,14 @@ public class IDManagerEditor : Editor
             GUILayout.EndHorizontal();
         }
 
+        // リセットボタンの作成
+        if (GUILayout.Button("IDをリセット"))
+        {
+            idManager.ResetID();  // IDをリセット
+            EditorUtility.SetDirty(idManager);  // IDManagerオブジェクトをエディタに更新
+            AssetDatabase.SaveAssets();  // アセットを保存して変更を反映
+        }
+
         // デフォルトのインスペクタを表示
         base.OnInspectorGUI();
     }
