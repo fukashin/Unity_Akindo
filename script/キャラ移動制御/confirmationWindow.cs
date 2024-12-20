@@ -1,61 +1,61 @@
-using UnityEngine;
-using UnityEngine.SceneManagement; // ƒV[ƒ“Ø‚è‘Ö‚¦‚É•K—v
+ï»¿using UnityEngine;
+using UnityEngine.SceneManagement; // ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã«å¿…è¦
 
 public class SceneTransition : MonoBehaviour
 {
-    public string targetSceneName; // Ÿ‚ÌƒV[ƒ“‚Ì–¼‘O
-    public GameObject confirmationWindow; // Šm”FƒEƒBƒ“ƒhƒE‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg
-    private bool isPlayerInTrigger = false; // ƒvƒŒƒCƒ„[‚ªƒgƒŠƒK[“à‚É‚¢‚é‚©‚Ç‚¤‚©
+    public string targetSceneName; // æ¬¡ã®ã‚·ãƒ¼ãƒ³ã®åå‰
+    public GameObject confirmationWindow; // ç¢ºèªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    private bool isPlayerInTrigger = false; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒãƒˆãƒªã‚¬ãƒ¼å†…ã«ã„ã‚‹ã‹ã©ã†ã‹
 
     private void Start()
     {
         if (confirmationWindow != null)
         {
-            confirmationWindow.SetActive(false); // ƒQ[ƒ€ŠJn‚ÉŠm”FƒEƒBƒ“ƒhƒE‚ğ”ñ•\¦‚É‚·‚é
+            confirmationWindow.SetActive(false); // ã‚²ãƒ¼ãƒ é–‹å§‹æ™‚ã«ç¢ºèªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’éè¡¨ç¤ºã«ã™ã‚‹
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // ƒvƒŒƒCƒ„[‚ªƒgƒŠƒK[“à‚É“ü‚Á‚½ê‡
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒãƒˆãƒªã‚¬ãƒ¼å†…ã«å…¥ã£ãŸå ´åˆ
         if (other.CompareTag("Player"))
         {
-            isPlayerInTrigger = true; // ƒgƒŠƒK[“à‚É‚¢‚éó‘Ô‚ğ‹L˜^
+            isPlayerInTrigger = true; // ãƒˆãƒªã‚¬ãƒ¼å†…ã«ã„ã‚‹çŠ¶æ…‹ã‚’è¨˜éŒ²
             if (confirmationWindow != null)
             {
-                confirmationWindow.SetActive(true); // Šm”FƒEƒBƒ“ƒhƒE‚ğ•\¦
+                confirmationWindow.SetActive(true); // ç¢ºèªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤º
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        // ƒvƒŒƒCƒ„[‚ªƒgƒŠƒK[‚©‚ç—£‚ê‚½ê‡
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒãƒˆãƒªã‚¬ãƒ¼ã‹ã‚‰é›¢ã‚ŒãŸå ´åˆ
         if (other.CompareTag("Player"))
         {
-            isPlayerInTrigger = false; // ƒgƒŠƒK[‚©‚ç—£‚ê‚½ó‘Ô‚ğ‹L˜^
+            isPlayerInTrigger = false; // ãƒˆãƒªã‚¬ãƒ¼ã‹ã‚‰é›¢ã‚ŒãŸçŠ¶æ…‹ã‚’è¨˜éŒ²
             if (confirmationWindow != null)
             {
-                confirmationWindow.SetActive(false); // Šm”FƒEƒBƒ“ƒhƒE‚ğ”ñ•\¦
+                confirmationWindow.SetActive(false); // ç¢ºèªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’éè¡¨ç¤º
             }
         }
     }
 
-    // ƒ{ƒ^ƒ“‚©‚çŒÄ‚Ño‚·ŠÖ”FŠX‚É“ü‚é
+    // ãƒœã‚¿ãƒ³ã‹ã‚‰å‘¼ã³å‡ºã™é–¢æ•°ï¼šè¡—ã«å…¥ã‚‹
     public void EnterTown()
     {
         if (isPlayerInTrigger && !string.IsNullOrEmpty(targetSceneName))
         {
-            SceneManager.LoadScene(targetSceneName); // ƒV[ƒ“‚ğƒ[ƒh
+            SceneManager.LoadScene(targetSceneName); // ã‚·ãƒ¼ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰
         }
     }
 
-    // ƒ{ƒ^ƒ“‚©‚çŒÄ‚Ño‚·ŠÖ”FƒLƒƒƒ“ƒZƒ‹
+    // ãƒœã‚¿ãƒ³ã‹ã‚‰å‘¼ã³å‡ºã™é–¢æ•°ï¼šã‚­ãƒ£ãƒ³ã‚»ãƒ«
     public void Cancel()
     {
         if (confirmationWindow != null)
         {
-            confirmationWindow.SetActive(false); // Šm”FƒEƒBƒ“ƒhƒE‚ğ”ñ•\¦
+            confirmationWindow.SetActive(false); // ç¢ºèªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’éè¡¨ç¤ºã€€ãƒ†ã‚¹ãƒˆ
         }
     }
 }

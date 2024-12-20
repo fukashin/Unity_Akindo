@@ -1,62 +1,62 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Objects/CharacterData")]
 public class CharacterData : ScriptableObject
 {
-    [Header("ƒLƒƒƒ‰ƒNƒ^[Šî–{î•ñ")]
-    public string characterName; // ƒLƒƒƒ‰ƒNƒ^[–¼
+    [Header("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼åŸºæœ¬æƒ…å ±")]
+    public string characterName; // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼åã€€ãƒ†ã‚¹ãƒˆ
 
-    [Header("ƒXƒe[ƒ^ƒX")]
-    [Tooltip("ƒLƒƒƒ‰ƒNƒ^[‚ÌÅ‘åHP")]
-    public int maxHP;            // Å‘åHP
-    [Tooltip("ƒLƒƒƒ‰ƒNƒ^[‚ÌUŒ‚—Í")]
-    public int attackPower;      // UŒ‚—Í
-    [Tooltip("ƒLƒƒƒ‰ƒNƒ^[‚Ì–hŒä—Í")]
-    public int defensePower;     // –hŒä—Í
+    [Header("ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹")]
+    [Tooltip("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®æœ€å¤§HP")]
+    public int maxHP;            // æœ€å¤§HP
+    [Tooltip("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®æ”»æ’ƒåŠ›")]
+    public int attackPower;      // æ”»æ’ƒåŠ›
+    [Tooltip("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®é˜²å¾¡åŠ›")]
+    public int defensePower;     // é˜²å¾¡åŠ›
 
-    [Header("‚»‚Ì‘¼‚Ìİ’è")]
-    [Tooltip("ƒLƒƒƒ‰ƒNƒ^[‚ÌˆÚ“®‘¬“x")]
-    public float moveSpeed;      // ˆÚ“®‘¬“x
-    [Tooltip("ƒLƒƒƒ‰ƒNƒ^[‚ÌƒAƒCƒRƒ“")]
-    public Sprite characterIcon; // ƒLƒƒƒ‰ƒNƒ^[‚ÌƒAƒCƒRƒ“
-    [Tooltip("ƒLƒƒƒ‰ƒNƒ^[‚ÌƒvƒŒƒnƒu")]
-    public GameObject prefab;    // ƒLƒƒƒ‰ƒNƒ^[‚ÌƒvƒŒƒnƒu
+    [Header("ãã®ä»–ã®è¨­å®š")]
+    [Tooltip("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ç§»å‹•é€Ÿåº¦")]
+    public float moveSpeed;      // ç§»å‹•é€Ÿåº¦
+    [Tooltip("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ã‚¢ã‚¤ã‚³ãƒ³")]
+    public Sprite characterIcon; // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ã‚¢ã‚¤ã‚³ãƒ³
+    [Tooltip("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ãƒ—ãƒ¬ãƒãƒ–")]
+    public GameObject prefab;    // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ãƒ—ãƒ¬ãƒãƒ–
 
-    [Header("ŒoŒ±’l‚âƒŒƒxƒ‹")]
-    public int level;            // ƒLƒƒƒ‰ƒNƒ^[‚ÌƒŒƒxƒ‹
-    [Tooltip("Œ»İ‚ÌŒoŒ±’l")]
-    public int currentXP;        // Œ»İ‚ÌŒoŒ±’l
-    [Tooltip("‰Šú‚ÌƒŒƒxƒ‹ƒAƒbƒv‚É•K—v‚ÈŒoŒ±’l")]
-    public int baseXP;           // ‰Šú‚ÌƒŒƒxƒ‹ƒAƒbƒv‚É•K—v‚ÈŒoŒ±’l
-    [Tooltip("ŒoŒ±’l‚Ì¬’·—¦")]
-    public float growthRate;     // ŒoŒ±’l‚Ì¬’·—¦i—á‚¦‚Î1.2‚È‚ç20%‘‰Áj
+    [Header("çµŒé¨“å€¤ã‚„ãƒ¬ãƒ™ãƒ«")]
+    public int level;            // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ãƒ¬ãƒ™ãƒ«
+    [Tooltip("ç¾åœ¨ã®çµŒé¨“å€¤")]
+    public int currentXP;        // ç¾åœ¨ã®çµŒé¨“å€¤
+    [Tooltip("åˆæœŸã®ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—ã«å¿…è¦ãªçµŒé¨“å€¤")]
+    public int baseXP;           // åˆæœŸã®ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—ã«å¿…è¦ãªçµŒé¨“å€¤
+    [Tooltip("çµŒé¨“å€¤ã®æˆé•·ç‡")]
+    public float growthRate;     // çµŒé¨“å€¤ã®æˆé•·ç‡ï¼ˆä¾‹ãˆã°1.2ãªã‚‰20%å¢—åŠ ï¼‰
 
-    [Header("ƒXƒLƒ‹")]
-    public List<string> skills;  // ƒLƒƒƒ‰ƒNƒ^[‚ª‚ÂƒXƒLƒ‹‚ÌƒŠƒXƒg
+    [Header("ã‚¹ã‚­ãƒ«")]
+    public List<string> skills;  // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãŒæŒã¤ã‚¹ã‚­ãƒ«ã®ãƒªã‚¹ãƒˆ
 
-    [Header("Š•i")]
-    public List<BaseItem> inventory; // CharacterData“à‚ÅBaseItem‚ğg—p
-    public int maxInventorySize = 5; // Å‘å5í—Ş‚Ü‚Å
+    [Header("æ‰€æŒå“")]
+    public List<BaseItem> inventory; // CharacterDataå†…ã§BaseItemã‚’ä½¿ç”¨
+    public int maxInventorySize = 5; // æœ€å¤§5ç¨®é¡ã¾ã§
 
 
-    [Header("‘•”õ•i")]
-    [Tooltip("•Ší")]
-    public EquipItem weapon;      // •Ší
-    [Tooltip("“ª‘•”õ")]
-    public EquipItem headGear;    // “ª‘•”õ
-    [Tooltip("“·‘Ì‘•”õ")]
-    public EquipItem bodyArmor;    // “·‘Ì‘•”õ
-    [Tooltip("‹r‘•”õ")]
-    public EquipItem leg;     // ‹r‘•”õ
-    [Tooltip("è‘•”õ")]
-    public EquipItem hands;    // è‘•”õ
-    [Tooltip("‘•ü•i‚P")]
-    public EquipItem accessory1;  // ‘•ü•i1
-    [Tooltip("‘•ü•i‚Q")]
-    public EquipItem accessory2;  // ‘•ü•i2
+    [Header("è£…å‚™å“")]
+    [Tooltip("æ­¦å™¨")]
+    public EquipItem weapon;      // æ­¦å™¨
+    [Tooltip("é ­è£…å‚™")]
+    public EquipItem headGear;    // é ­è£…å‚™
+    [Tooltip("èƒ´ä½“è£…å‚™")]
+    public EquipItem bodyArmor;    // èƒ´ä½“è£…å‚™
+    [Tooltip("è„šè£…å‚™")]
+    public EquipItem leg;     // è„šè£…å‚™
+    [Tooltip("æ‰‹è£…å‚™")]
+    public EquipItem hands;    // æ‰‹è£…å‚™
+    [Tooltip("è£…é£¾å“ï¼‘")]
+    public EquipItem accessory1;  // è£…é£¾å“1
+    [Tooltip("è£…é£¾å“ï¼’")]
+    public EquipItem accessory2;  // è£…é£¾å“2
 
-    // Ÿ‚ÌƒŒƒxƒ‹‚É•K—v‚ÈŒoŒ±’l‚ğŒvZ‚·‚éƒƒ\ƒbƒh
+    // æ¬¡ã®ãƒ¬ãƒ™ãƒ«ã«å¿…è¦ãªçµŒé¨“å€¤ã‚’è¨ˆç®—ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     public int GetXPToNextLevel()
     {
         return Mathf.FloorToInt(baseXP * Mathf.Pow(growthRate, level - 1));

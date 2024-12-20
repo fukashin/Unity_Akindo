@@ -1,15 +1,15 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
 
 public class EquipmentUI : MonoBehaviour
 {
-    [Header("ƒLƒƒƒ‰ƒNƒ^[‚Ìƒf[ƒ^")]
-    public CharacterData characterData; // CharacterData‚Ö‚ÌQÆ
+    [Header("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿")]
+    public CharacterData characterData; // CharacterDataã¸ã®å‚ç…§ ãƒ†ã‚¹ãƒˆ
 
-    [Header("‘•”õƒAƒCƒRƒ“—p‚Ìƒpƒlƒ‹")]
-    public RectTransform equipmentPanel; // RectTransformŒ^‚É•ÏX
+    [Header("è£…å‚™ã‚¢ã‚¤ã‚³ãƒ³ç”¨ã®ãƒ‘ãƒãƒ«")]
+    public RectTransform equipmentPanel; // RectTransformå‹ã«å¤‰æ›´
 
 
     private Dictionary<string, Image> equipmentIcons = new Dictionary<string, Image>();
@@ -20,12 +20,12 @@ public class EquipmentUI : MonoBehaviour
         UpdateEquipmentIcons();
     }
 
-    // ‘•”õ•iƒpƒlƒ‹“à‚ÌƒAƒCƒRƒ“‚ğ©“®ŒŸo
+    // è£…å‚™å“ãƒ‘ãƒãƒ«å†…ã®ã‚¢ã‚¤ã‚³ãƒ³ã‚’è‡ªå‹•æ¤œå‡º
     void InitializeEquipmentIcons()
     {
         equipmentIcons.Clear();
 
-        // ‘•”õ•iƒAƒCƒRƒ“‚Ì–½–¼‹K‘¥‚ÉŠî‚Ã‚¢‚Ä©“®“o˜^
+        // è£…å‚™å“ã‚¢ã‚¤ã‚³ãƒ³ã®å‘½åè¦å‰‡ã«åŸºã¥ã„ã¦è‡ªå‹•ç™»éŒ²
         foreach (Transform child in equipmentPanel)
         {
             if (child.TryGetComponent<Image>(out Image icon))
@@ -35,7 +35,7 @@ public class EquipmentUI : MonoBehaviour
         }
     }
 
-    // ‘•”õƒAƒCƒRƒ“‚ğXV
+    // è£…å‚™ã‚¢ã‚¤ã‚³ãƒ³ã‚’æ›´æ–°
     void UpdateEquipmentIcons()
     {
         if (characterData == null)
@@ -44,7 +44,7 @@ public class EquipmentUI : MonoBehaviour
             return;
         }
 
-        // ‘•”õ•iƒAƒCƒRƒ“‚ğ“®“I‚Éİ’è
+        // è£…å‚™å“ã‚¢ã‚¤ã‚³ãƒ³ã‚’å‹•çš„ã«è¨­å®š
         SetIcon("weapon", characterData.weapon);
         SetIcon("headgear", characterData.headGear);
         SetIcon("bodyarmor", characterData.bodyArmor);
@@ -58,9 +58,9 @@ public class EquipmentUI : MonoBehaviour
     {
         if (equipmentIcons.TryGetValue(slotName, out Image icon))
         {
-            if (item != null && item.¤•i‰æ‘œ != null)
+            if (item != null && item.å•†å“ç”»åƒ != null)
             {
-                icon.sprite = item.¤•i‰æ‘œ;
+                icon.sprite = item.å•†å“ç”»åƒ;
                 icon.gameObject.SetActive(true);
             }
             else
