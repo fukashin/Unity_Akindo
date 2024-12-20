@@ -4,14 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - weaponIcon: {instanceID: 0}
-  - headIcon: {instanceID: 0}
-  - bodyIcon: {instanceID: 0}
-  - legsIcon: {instanceID: 0}
-  - handsIcon: {instanceID: 0}
-  - accessoryIcon1: {instanceID: 0}
-  - accessoryIcon2: {instanceID: 0}
-  - characterData: {fileID: 11400000, guid: 7e07cb586994e3c458d4a5218f5397d1, type: 2}
+  - characterData: {instanceID: 0}
+  - equipmentPanel: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

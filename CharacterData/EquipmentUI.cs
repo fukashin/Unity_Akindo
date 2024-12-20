@@ -62,10 +62,12 @@ public class EquipmentUI : MonoBehaviour
             {
                 icon.sprite = item.商品画像;
                 icon.gameObject.SetActive(true);
+                Debug.Log($"Icon set for {slotName}: {item.商品画像.name}");
             }
             else
             {
                 icon.gameObject.SetActive(false);
+                Debug.LogWarning($"No image found for {slotName}");
             }
         }
         else
