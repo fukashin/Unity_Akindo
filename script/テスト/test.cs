@@ -1,51 +1,49 @@
-// using UnityEngine;
-// using UnityEngine.UI;
+using UnityEngine;
+using UnityEngine.UI;
 
-// public class PlayerInventory : MonoBehaviour
-// {
-//     public InventoryData inventoryData; // 所持アイテムリスト
-//     private SaveManager saveManager;
+public class AddTestItem : MonoBehaviour
+{
+    public PlayerInventory playerInventory; // PlayerInventory の参照（Inspectorで設定）
+    public Button addItemButton;            // アイテム追加ボタン（Inspectorで設定）
+    public SaveManager SaveManager;
+    public InventoryData inventoryData; // プレイヤーが所持しているアイテムリスト
 
-//     public Button addItemButton; // アイテム追加ボタン（Inspectorで設定）
+    void Start()
+    {
+        if (playerInventory == null)
+        {
+            Debug.LogError("playerInventory が設定されていません！Inspector で設定してください。");
+            return; // 処理を中断
+        }
 
-//     void Start()
-//     {
-//         saveManager = FindObjectOfType<SaveManager>();
+        if (addItemButton != null)
+        {
+            // ボタンにクリックイベントを登録
+            addItemButton.onClick.AddListener(AddTestItemmmm);
+        }
+        else
+        {
+            Debug.LogError("addItemButton が設定されていません！Inspector で設定してください。");
+        }
+    }
 
-//         // ボタンにクリックイベントを登録
-//         if (addItemButton != null)
-//         {
-//             addItemButton.onClick.AddListener(() => AddTestItem());
-//         }
+    public void AddTestItemmmm()
+    {
+        if (playerInventory == null)
+        {
+            Debug.LogError("playerInventory が設定されていません！処理を中断します。");
+            return;
+        }
 
-//         // インベントリをロード
-//         inventoryData = saveManager.LoadInventory();
-//     }
+        int testItemID = 10;    // 固定のアイテムID
+        int testQuantity = 1;  // 固定の数量
 
-//     // テスト用のアイテム追加関数
-//     public void AddTestItem()
-//     {
-//         int testItemID = 1;    // テスト用のアイテムID
-//         int testQuantity = 1; // テスト用の数量
+        Debug.Log($"AddTestItemmmm メソッドが呼び出されました: ID = {testItemID}, 数量 = {testQuantity}");
 
-//         AddItem(testItemID, testQuantity); // アイテムを追加
-//         saveManager.SaveInventory(inventoryData); // データを保存
+        // PlayerInventory にアイテム追加を依頼
+        playerInventory.AddItem(testItemID, testQuantity);
+        
 
-//         Debug.Log($"テストアイテムを追加しました: ID = {testItemID}, 数量 = {testQuantity}");
-//     }
-
-//     // アイテムを追加する関数
-//     public void AddItem(int itemID, int quantity)
-//     {
-//         var item = inventoryData.所持アイテムリスト.Find(x => x.ItemID == itemID);
-
-//         if (item != null)
-//         {
-//             item.所持数 += quantity;
-//         }
-//         else
-//         {
-//             inventoryData.所持アイテムリスト.Add(new OwnedItem { ItemID = itemID, 所持数 = quantity });
-//         }
-//     }
-// }
+        Debug.Log($"AddTestItem: ID = {testItemID}, 数量 = {testQuantity} を追加しました。");
+    }
+}
