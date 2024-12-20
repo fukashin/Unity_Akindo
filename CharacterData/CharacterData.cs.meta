@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: a0494fc403bd9024796c7a1134dc114d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - characterIcon: {instanceID: 0}
+  - prefab: {instanceID: 0}
+  - weapon: {fileID: 11400000, guid: 591ad0c52b8ab7740974a9b7b71cba96, type: 2}
+  - headGear: {instanceID: 0}
+  - bodyArmor: {fileID: 11400000, guid: ac93c8d2ab332a348aacc929b81f524c, type: 2}
+  - leg: {instanceID: 0}
+  - hands: {instanceID: 0}
+  - accessory1: {instanceID: 0}
+  - accessory2: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
