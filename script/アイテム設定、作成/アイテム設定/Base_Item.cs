@@ -6,6 +6,7 @@ public class BaseItem : ScriptableObject
 
     public int ID;          // プライマリキー
     public string 商品名;    // 商品名
+    public string 説明欄; 
     public ItemType 大分類;  //アイテム種別
     public ItemType2 小分類;  //種類
     public int 相場;               // 価格
@@ -20,4 +21,25 @@ public class BaseItem : ScriptableObject
     }
 
     public List<MaterialRequirement> 必要素材; // 必要な素材リスト
+
+    // 初期化時にユニークIDを生成
+    private void OnEnable()
+    {
+        if (ID == 0) // 既にIDが設定されていない場合のみ生成
+        {
+            ID = GenerateUniqueID();
+        }
+    }
+
+    // ユニークIDを生成する関数
+    private int GenerateUniqueID()
+    {
+        return System.Guid.NewGuid().GetHashCode();
+    }
+
+    // IDを取得するプロパティ
+    public int GetID()
+    {
+        return ID;
+    }
 }

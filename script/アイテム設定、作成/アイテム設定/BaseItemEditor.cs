@@ -10,6 +10,9 @@ public class NormalItemEditor : Editor
         // 対象のNormalItemを取得
         NormalItem normalItem = (NormalItem)target;
 
+        // ID
+        normalItem.ID = EditorGUILayout.IntField("iD", normalItem.ID);
+
         // 商品名入力
         normalItem.商品名 = EditorGUILayout.TextField("商品名", normalItem.商品名);
 
