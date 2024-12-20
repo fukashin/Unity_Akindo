@@ -131,6 +131,9 @@ GameObject:
   - component: {fileID: 15675973}
   - component: {fileID: 15675972}
   - component: {fileID: 15675971}
+  - component: {fileID: 15675974}
+  - component: {fileID: 15675976}
+  - component: {fileID: 15675977}
   m_Layer: 5
   m_Name: AddItemButton
   m_TagString: Untagged
@@ -202,10 +205,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 15675969}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
+      - m_Target: {fileID: 15675977}
+        m_TargetAssemblyTypeName: AddTestItem, Assembly-CSharp
         m_MethodName: 
-        m_Mode: 5
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -252,6 +255,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15675969}
   m_CullTransparentMesh: 1
+--- !u!114 &15675974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15675969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa101947d85686141b5a6a32c7ca0c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryData:
+    "\u6240\u6301\u30A2\u30A4\u30C6\u30E0\u30EA\u30B9\u30C8":
+    - ItemID: 0
+      "\u6240\u6301\u6570": 0
+    - ItemID: 0
+      "\u6240\u6301\u6570": 0
+--- !u!114 &15675976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15675969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf0e6056018e1f4f8074dd346157a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &15675977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15675969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88077847e250444dbf6a8edf4fe3e0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInventory: {fileID: 15675974}
+  addItemButton: {fileID: 15675971}
 --- !u!1 &191493883
 GameObject:
   m_ObjectHideFlags: 0

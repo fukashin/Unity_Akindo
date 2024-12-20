@@ -10,6 +10,8 @@ public class EquipItemEditor : Editor
         EquipItem equipItem = (EquipItem)target;
 
         equipItem.商品名 = EditorGUILayout.TextField("商品名", equipItem.商品名);
+        // ID
+        equipItem.ID = EditorGUILayout.IntField("iD", equipItem.ID);
 
         equipItem.小分類 = (ItemType2)EditorGUILayout.ObjectField("小分類", equipItem.小分類, typeof(ItemType2), false);
         if (equipItem.小分類 != null)
