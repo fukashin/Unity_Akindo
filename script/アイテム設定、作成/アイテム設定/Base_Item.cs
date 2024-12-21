@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;  // UnityEditor名前空間をインポート
 #endif
 
-[CreateAssetMenu(fileName = "BaseItem", menuName = "Item/BaseItem")]
-public class BaseItem : ScriptableObject
+// [CreateAssetMenu(fileName = "BaseItem", menuName = "Item/BaseItem")]
+public class BaseItem : ScriptableObject, IComparable<BaseItem>
 {
     public int ID;              // アイテムID
     public string 商品名;        // 商品名
@@ -31,43 +32,49 @@ public class BaseItem : ScriptableObject
     // 初期化時にユニークIDを生成
     private void OnEnable()
     {
-        // IDManagerがまだ設定されていない場合、シーンからIDManagerを取得する
         if (idManager == null)
         {
-            // シーン内のIDManagerを検索
-            idManager = FindObjectOfType<IDManager>();
-
-            // シーン内にIDManagerがない場合、ResourcesからIDManagerを読み込む
+            idManager = FindFirstObjectByType<IDManager>();
             if (idManager == null)
             {
                 idManager = Resources.Load<IDManager>("IDManager");
-
                 if (idManager == null)
                 {
-                    Debug.LogError("IDManagerがシーン内またはResourcesから見つかりません！IDの管理ができません。");
-                    return;  // ID生成を中止
+                    Debug.LogError("IDManagerがシーン内またはResourcesから見つかりません！");
+                    return;
                 }
             }
         }
 
-        // IDが未設定の場合のみ新しいIDを生成
         if (ID == 0)
         {
-            ID = idManager.GetNewID(); // IDManager から新しいIDを取得
-
-            // アイテムリストにアイテムを追加
+            ID = idManager.GetNewID(); // IDManagerから新しいIDを取得
             idManager.AddItem(this);    // アイテムをIDManagerに追加
 
-            // エディタでIDManagerを更新
 #if UNITY_EDITOR
             EditorUtility.SetDirty(idManager);  // IDManagerを更新
 #endif
         }
     }
 
+    // IComparableを実装
+    public int CompareTo(BaseItem other)
+    {
+        if (other == null) return 1;
+
+        // 例えばIDでソートする場合
+        return this.ID.CompareTo(other.ID); // IDが小さい順に並べる
+    }
+
     // IDを取得するプロパティ
     public int GetID()
     {
         return ID;
+    }
+
+    // IDをリセットするメソッド
+    public void ResetID()
+    {
+        ID = 0;
     }
 }

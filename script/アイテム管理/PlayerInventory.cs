@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
@@ -11,7 +11,7 @@ public class PlayerInventory : MonoBehaviour
     void Start()
     {
         // SaveManagerスクリプトをシーン内から探して取得
-        saveManager = FindObjectOfType<SaveManager>();
+        saveManager = FindFirstObjectByType<SaveManager>();
 
 
         // 保存されているインベントリデータをロードして復元

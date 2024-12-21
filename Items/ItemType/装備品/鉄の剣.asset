@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ace2e8efa577d4fbfa919dd84e18b4, type: 3}
   m_Name: "\u9244\u306E\u5263"
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 9
   "\u5546\u54C1\u540D": "\u9244\u306E\u5263"
   "\u8AAC\u660E\u6B04": 
-  "\u5927\u5206\u985E": {fileID: 11400000, guid: 0c7021808cc38b24aa62c267d4d1c390, type: 2}
-  "\u5C0F\u5206\u985E": {fileID: 11400000, guid: 011d1c9699ddb6947bfae3720950a6dd, type: 2}
+  "\u5927\u5206\u985E": {fileID: 11400000, guid: 0c7021808cc38b24aa62c267d4d1c390,
+    type: 2}
+  "\u5C0F\u5206\u985E": {fileID: 11400000, guid: 011d1c9699ddb6947bfae3720950a6dd,
+    type: 2}
   "\u76F8\u5834": 0
   "\u9700\u8981": 0
-  "\u5546\u54C1\u753B\u50CF": {fileID: -7790738977837702787, guid: e4741da9882152c4cbbcb8d8d13d453f, type: 3}
+  "\u5546\u54C1\u753B\u50CF": {fileID: -7790738977837702787, guid: e4741da9882152c4cbbcb8d8d13d453f,
+    type: 3}
   "\u5FC5\u8981\u7D20\u6750":
-  - "\u7D20\u6750": {fileID: 11400000, guid: 420a425737ce2c94fb1325defe406130, type: 2}
+  - "\u7D20\u6750": {fileID: 0}
     "\u5FC5\u8981\u6570": 1
   "\u653B\u6483\u529B": 2
   "\u9632\u5FA1\u529B": 0

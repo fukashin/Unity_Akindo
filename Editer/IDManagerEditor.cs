@@ -6,7 +6,7 @@ public class IDManagerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        IDManager idManager = (IDManager)target;
+        IDManager idManager = Resources.Load<IDManager>("IDManager");
 
         // アイテムリストの表示
         GUILayout.Label("アイテム一覧");
@@ -21,9 +21,13 @@ public class IDManagerEditor : Editor
         // リセットボタンの作成
         if (GUILayout.Button("IDをリセット"))
         {
+            Debug.Log("IDリセットボタンがクリックされました。");
             idManager.ResetID();  // IDをリセット
+            Debug.Log("アイテムのIDがリセットされました。");
             EditorUtility.SetDirty(idManager);  // IDManagerオブジェクトをエディタに更新
+            Debug.Log("エディタに更新しました。");
             AssetDatabase.SaveAssets();  // アセットを保存して変更を反映
+            Debug.Log("アセットを保存して、変更を反映しました。");
         }
 
         // デフォルトのインスペクタを表示
