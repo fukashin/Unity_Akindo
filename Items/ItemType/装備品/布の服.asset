@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ace2e8efa577d4fbfa919dd84e18b4, type: 3}
   m_Name: "\u5E03\u306E\u670D"
   m_EditorClassIdentifier: 
-  ID: 7
+  ID: 5
   "\u5546\u54C1\u540D": "\u5E03\u306E\u670D"
   "\u8AAC\u660E\u6B04": 
   "\u5927\u5206\u985E": {fileID: 11400000, guid: 0c7021808cc38b24aa62c267d4d1c390,

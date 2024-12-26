@@ -6,7 +6,6 @@ using System;
 using UnityEditor;  // UnityEditor名前空間をインポート
 #endif
 
-// [CreateAssetMenu(fileName = "BaseItem", menuName = "Item/BaseItem")]
 public class BaseItem : ScriptableObject, IComparable<BaseItem>
 {
     public int ID;              // アイテムID
@@ -16,6 +15,8 @@ public class BaseItem : ScriptableObject, IComparable<BaseItem>
     public ItemType2 小分類;     // 種類
     public int 相場;            // 価格
     public int 需要;            // 需要
+    private bool 耐久値有無;　　//耐久値の有無
+    public int 耐久値;　　　　　//耐久値
     public Sprite 商品画像;     // 商品画像
 
     [System.Serializable]

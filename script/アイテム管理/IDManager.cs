@@ -110,6 +110,7 @@ public class IDManager : ScriptableObject
         .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
         .Select(path => AssetDatabase.LoadAssetAtPath<BaseItem>(path))
         .Where(item => item != null) // nullチェック
+        .OrderBy(item => item.ID)
         .ToList();
 
     currentMaxID = アイテムリスト.Max(item => item.ID);  // 現在のIDリストの最大値を設定

@@ -57,18 +57,6 @@ public class NormalItemEditor : Editor
             {
                 normalItem.必要素材.RemoveAt(i);
                 i--;
-
-                // IDManagerからIDを削除
-                /*
-                IDManager idManager = Object.FindFirstObjectByType<IDManager>();
-                if (idManager != null)
-                {
-                    idManager.RemoveItemID(normalItem);
-                    #if UNITY_EDITOR
-                    EditorUtility.SetDirty(idManager);
-                    #endif
-                }
-                */
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -77,38 +65,6 @@ public class NormalItemEditor : Editor
         if (GUILayout.Button("素材を追加"))
         {
             normalItem.必要素材.Add(new NormalItem.MaterialRequirement());
-        }
-
-        // IDリセットボタンを追加
-        if (GUILayout.Button("IDリセット"))
-        {
-            Debug.Log("IDリセットボタンがクリックされました。");
-
-            IDManager idManager = Resources.Load<IDManager>("IDManager");
-            //IDManager idManager = Object.FindFirstObjectByType<IDManager>();
-            if (idManager != null)
-            {
-                Debug.Log("IDManagerが見つかりました。");
-
-                idManager.RemoveItemID(normalItem);  // 現在のIDをIDManagerから削除
-                EditorUtility.SetDirty(normalItem);
-
-                normalItem.ResetID();  // アイテムのIDをリセット
-                Debug.Log("アイテムのIDがリセットされました。");
-
-                normalItem.ID = idManager.GetNewID();  // 新しいIDを設定
-                Debug.Log("新しいIDが設定されました: " + normalItem.ID);
-
-                EditorUtility.SetDirty(normalItem);  // 変更をエディタに通知
-                Debug.Log("変更がエディタに通知されました。");
-
-                // IDリセット後にログ出力
-                Debug.Log("個別にIDがリセットされ、再割り当てされました。");
-            }
-            else
-            {
-                Debug.LogError("IDManagerが見つかりませんでした。");
-            }
         }
 
         // 変更があった場合、インスペクターに通知
