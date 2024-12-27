@@ -9,31 +9,45 @@ public class EquipItemEditor : Editor
     {
         EquipItem equipItem = (EquipItem)target;
 
-        equipItem.商品名 = EditorGUILayout.TextField("商品名", equipItem.商品名);
+        // 初期化時にIDが0なら、IDManagerからIDを取得
+        if (equipItem.ID == 0)
+        {
+            IDManager idManager = Resources.Load<IDManager>("IDManager");
+            if (idManager != null)
+            {
+                equipItem.ID = idManager.GetNewID();
+
+                idManager.AddItem(equipItem);  // アイテムをIDManagerに追加
+                EditorUtility.SetDirty(equipItem);  // 変更をエディタに通知
+                Debug.Log("変更がエディタに通知されました。");
+            }
+        }
 
         // ID表示
         equipItem.ID = EditorGUILayout.IntField("iD", equipItem.ID);
 
-        // 小分類、大分類の設定
-        equipItem.小分類 = (ItemType2)EditorGUILayout.ObjectField("小分類", equipItem.小分類, typeof(ItemType2), false);
-        if (equipItem.小分類 != null)
+        //商品名表示
+        equipItem.商品名 = EditorGUILayout.TextField("商品名", equipItem.商品名);
+
+        // 他のフィールドの表示
+        EditorGUILayout.LabelField("説明欄");
+        equipItem.説明欄 = EditorGUILayout.TextArea(equipItem.説明欄, EditorStyles.textArea, GUILayout.Height(60)); 
+
+        // アイテムタイプの設定
+        equipItem.アイテムタイプ = (ItemType)EditorGUILayout.EnumPopup("アイテムタイプ", equipItem.アイテムタイプ);
+
+        // アイテムタイプに応じた設定を追加（例：装備品専用の設定）
+        if (equipItem.アイテムタイプ == ItemType.装備)
         {
-            equipItem.大分類 = equipItem.小分類.大分類;
+            equipItem.攻撃力 = EditorGUILayout.IntField("攻撃力", equipItem.攻撃力);
+            equipItem.防御力 = EditorGUILayout.IntField("防御力", equipItem.防御力);
+            equipItem.耐久力 = EditorGUILayout.IntField("耐久力", equipItem.耐久力);
         }
 
-        EditorGUI.BeginDisabledGroup(true);
-        equipItem.大分類 = (ItemType)EditorGUILayout.ObjectField("大分類", equipItem.大分類, typeof(ItemType), false);
-        EditorGUI.EndDisabledGroup();
-
         // その他のフィールド設定
-        equipItem.相場 = EditorGUILayout.IntField("相場", equipItem.相場);
+        equipItem.相場価格 = EditorGUILayout.IntField("相場価格", equipItem.相場価格);
         equipItem.需要 = EditorGUILayout.IntField("需要", equipItem.需要);
         equipItem.商品画像 = (Sprite)EditorGUILayout.ObjectField("商品画像", equipItem.商品画像, typeof(Sprite), false);
-
-        // 装備に関する設定
-        equipItem.攻撃力 = EditorGUILayout.IntField("攻撃力", equipItem.攻撃力);
-        equipItem.防御力 = EditorGUILayout.IntField("防御力", equipItem.防御力);
-        equipItem.耐久力 = EditorGUILayout.IntField("耐久力", equipItem.耐久力);
 
         // 必要素材リスト
         EditorGUILayout.LabelField("必要素材リスト", EditorStyles.boldLabel);
@@ -62,7 +76,7 @@ public class EquipItemEditor : Editor
         // IDリセットボタン
         if (GUILayout.Button("IDリセット"))
         {
-            //ResourceフォルダにあるIDManagerを使う
+            // ResourceフォルダにあるIDManagerを使う
             IDManager idManager = Resources.Load<IDManager>("IDManager");
             if (idManager != null)
             {

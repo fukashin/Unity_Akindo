@@ -53,10 +53,12 @@ public class IDManager : ScriptableObject
     }
 
     // IDが重複しないか確認
+    /*
     public bool IsIDUnique(int id)
     {
         return !allItemIDs.Contains(id); // IDが重複していなければtrue
     }
+    */
 
     // アイテムのIDを削除
     public void RemoveItemID(BaseItem item)

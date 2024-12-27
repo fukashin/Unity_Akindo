@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e61a55711c31240af2be88fbd6e9c2, type: 3}
   m_Name: "\u9244\u30A4\u30F3\u30B4\u30C3\u30C8"
   m_EditorClassIdentifier: 
-  ID: 10
+  ID: 9
   "\u5546\u54C1\u540D": "\u9244\u30A4\u30F3\u30B4\u30C3\u30C8"
   "\u8AAC\u660E\u6B04": 
-  "\u5927\u5206\u985E": {fileID: 11400000, guid: c5d3110c5c2153e4ca03c892faa9842d,
-    type: 2}
-  "\u5C0F\u5206\u985E": {fileID: 11400000, guid: 15ce2507027ea114bab2bad52fc6c105,
-    type: 2}
-  "\u76F8\u5834": 500
+  "\u30A2\u30A4\u30C6\u30E0\u30BF\u30A4\u30D7": 0
+  "\u76F8\u5834\u4FA1\u683C": 0
   "\u9700\u8981": 0
+  "\u8010\u4E45\u5024": 0
   "\u5546\u54C1\u753B\u50CF": {fileID: -5892075499776037678, guid: 98bb1d8e4b0e37e4ab5cf35393365fa7,
     type: 3}
+  "\u5728\u5EAB": 0
+  "\u6240\u6301\u6570": 0
   "\u5FC5\u8981\u7D20\u6750":
   - "\u7D20\u6750": {fileID: 11400000, guid: e47f77b900bd26d40a65eccf0b4a6b43, type: 2}
     "\u5FC5\u8981\u6570": 2

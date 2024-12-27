@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ace2e8efa577d4fbfa919dd84e18b4, type: 3}
   m_Name: "\u9244\u30D6\u30FC\u30C4"
   m_EditorClassIdentifier: 
-  ID: 9
+  ID: 8
   "\u5546\u54C1\u540D": "\u9244\u30D6\u30FC\u30C4"
   "\u8AAC\u660E\u6B04": 
-  "\u5927\u5206\u985E": {fileID: 11400000, guid: 0c7021808cc38b24aa62c267d4d1c390,
-    type: 2}
-  "\u5C0F\u5206\u985E": {fileID: 11400000, guid: 4333fdc97b5283d4fa12c57aa8a8dc73,
-    type: 2}
-  "\u76F8\u5834": 250
+  "\u30A2\u30A4\u30C6\u30E0\u30BF\u30A4\u30D7": 1
+  "\u76F8\u5834\u4FA1\u683C": 0
   "\u9700\u8981": 0
+  "\u8010\u4E45\u5024": 0
   "\u5546\u54C1\u753B\u50CF": {fileID: 8204461123412255717, guid: 372b4461ebb017d4996d2c0833898a2f,
     type: 3}
+  "\u5728\u5EAB": 0
+  "\u6240\u6301\u6570": 0
   "\u5FC5\u8981\u7D20\u6750": []
   "\u653B\u6483\u529B": 0
   "\u9632\u5FA1\u529B": 2

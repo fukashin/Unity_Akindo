@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class AddTestItem : MonoBehaviour
@@ -41,8 +41,8 @@ public class AddTestItem : MonoBehaviour
         Debug.Log($"AddTestItemmmm メソッドが呼び出されました: ID = {testItemID}, 数量 = {testQuantity}");
 
         // PlayerInventory にアイテム追加を依頼
-        playerInventory.AddItem(testItemID, testQuantity);
-        
+        playerInventory.AddItemToList(inventoryData.所持品, testItemID, testQuantity);
+
 
         Debug.Log($"AddTestItem: ID = {testItemID}, 数量 = {testQuantity} を追加しました。");
     }

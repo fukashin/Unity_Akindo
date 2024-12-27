@@ -27,12 +27,11 @@ MonoBehaviour:
   inventory:
   - {fileID: 11400000, guid: 591ad0c52b8ab7740974a9b7b71cba96, type: 2}
   - {fileID: 11400000, guid: ac93c8d2ab332a348aacc929b81f524c, type: 2}
-  - {fileID: 11400000, guid: e3f244f31906eac4a8e6555acd45f25a, type: 2}
   maxInventorySize: 5
   weapon: {fileID: 11400000, guid: 591ad0c52b8ab7740974a9b7b71cba96, type: 2}
   headGear: {fileID: 0}
   bodyArmor: {fileID: 11400000, guid: ac93c8d2ab332a348aacc929b81f524c, type: 2}
-  leg: {fileID: 11400000, guid: e3f244f31906eac4a8e6555acd45f25a, type: 2}
+  leg: {fileID: 0}
   hands: {fileID: 0}
   accessory1: {fileID: 0}
   accessory2: {fileID: 0}

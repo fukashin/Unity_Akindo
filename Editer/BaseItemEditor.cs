@@ -28,18 +28,21 @@ public class NormalItemEditor : Editor
 
         // 他のフィールドの表示
         normalItem.商品名 = EditorGUILayout.TextField("商品名", normalItem.商品名);
-        normalItem.小分類 = (ItemType2)EditorGUILayout.ObjectField("小分類", normalItem.小分類, typeof(ItemType2), false);
 
-        if (normalItem.小分類 != null)
+        // 他のフィールドの表示
+        EditorGUILayout.LabelField("説明欄");
+        normalItem.説明欄 = EditorGUILayout.TextArea(normalItem.説明欄, EditorStyles.textArea, GUILayout.Height(60)); 
+
+        // アイテムタイプの選択
+        normalItem.アイテムタイプ = (ItemType)EditorGUILayout.EnumPopup("アイテムタイプ", normalItem.アイテムタイプ);
+
+        // アイテムタイプに応じた処理（例えば装備品に特化するなど）
+        if (normalItem.アイテムタイプ == ItemType.装備)
         {
-            normalItem.大分類 = normalItem.小分類.大分類;
+            // 装備品専用の設定を表示する
         }
 
-        EditorGUI.BeginDisabledGroup(true);
-        normalItem.大分類 = (ItemType)EditorGUILayout.ObjectField("大分類", normalItem.大分類, typeof(ItemType), false);
-        EditorGUI.EndDisabledGroup();
-
-        normalItem.相場 = EditorGUILayout.IntField("相場", normalItem.相場);
+        normalItem.相場価格 = EditorGUILayout.IntField("相場価格", normalItem.相場価格);
         normalItem.需要 = EditorGUILayout.IntField("需要", normalItem.需要);
         normalItem.商品画像 = (Sprite)EditorGUILayout.ObjectField("商品画像", normalItem.商品画像, typeof(Sprite), false);
 

@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e61a55711c31240af2be88fbd6e9c2, type: 3}
   m_Name: "\u9244\u30C4\u30EB\u30CF\u30B7"
   m_EditorClassIdentifier: 
-  ID: 12
+  ID: 11
   "\u5546\u54C1\u540D": "\u9244\u30C4\u30EB\u30CF\u30B7"
   "\u8AAC\u660E\u6B04": 
-  "\u5927\u5206\u985E": {fileID: 0}
-  "\u5C0F\u5206\u985E": {fileID: 0}
-  "\u76F8\u5834": 0
+  "\u30A2\u30A4\u30C6\u30E0\u30BF\u30A4\u30D7": 0
+  "\u76F8\u5834\u4FA1\u683C": 0
   "\u9700\u8981": 0
+  "\u8010\u4E45\u5024": 0
   "\u5546\u54C1\u753B\u50CF": {fileID: -1639008896651412396, guid: 66d5e7c24790beb4ba2245cbee33fb7e,
     type: 3}
+  "\u5728\u5EAB": 0
+  "\u6240\u6301\u6570": 0
   "\u5FC5\u8981\u7D20\u6750": []
