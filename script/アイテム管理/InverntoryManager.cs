@@ -185,7 +185,14 @@ public class InventoryManager : MonoBehaviour
             var stockText = row.transform.Find("在庫").GetComponent<TextMeshProUGUI>();
             if (stockText != null)
             {
-                stockText.text = item.在庫 != 0 ? item.在庫.ToString() : "在庫なし";
+                if(items == 所持品アイテムリスト)
+                {
+                    stockText.text = item.所持数 != 0 ? $"所持数: {item.所持数}" : "所持数なし";
+                }
+                else  // 他のリストの場合（倉庫、陳列棚など）
+                {
+                    stockText.text = item.在庫 != 0 ? $"在庫数: {item.在庫}" : "在庫なし";
+                }
             }
 
             // 相場価格の設定（TextMeshProUGUI）

@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
 {
@@ -9,15 +9,18 @@ public class CharacterController : MonoBehaviour
     private Rigidbody2D rb;                 // Rigidbody2D コンポーネント
     private Vector2 inputAxis;              // 入力の方向
     private bool isRunning;                 // 走っているかの状態
-    Animator anim;
+    private Animator anim;                  // Animator
+
+    public int stepsToEncounter = 10;       // エンカウントまでの歩数
+    private int stepCount = 0;              // 現在の歩数
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();       // Rigidbody2D の取得
-        anim = GetComponent<Animator>();        // Animator の取得
+        rb = GetComponent<Rigidbody2D>();   // Rigidbody2D の取得
+        anim = GetComponent<Animator>();    // Animator の取得
 
         // Rigidbody2D 設定の確認
-        rb.linearDamping = 0f;                           // 抵抗値を無効化
+        rb.linearDamping = 0f;              // 抵抗値を無効化
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
@@ -38,9 +41,20 @@ public class CharacterController : MonoBehaviour
 
         // アニメーションの設定
         setAnim(inputAxis);
+
+        // プレイヤーの移動を監視する
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
+            Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            stepCount++;
+            if (stepCount >= stepsToEncounter)
+            {
+                TriggerEncounter();
+            }
+        }
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         // 移動速度を決定
         float currentSpeed = isRunning ? speed * runMultiplier : speed;
@@ -60,5 +74,17 @@ public class CharacterController : MonoBehaviour
         anim.speed = 1.0f;        // アニメーションを再生
         anim.SetFloat("X", vec2.x);
         anim.SetFloat("Y", vec2.y);
+    }
+
+    void TriggerEncounter()
+    {
+        stepCount = 0; // 歩数をリセット
+
+        // エンカウントした敵情報を設定（仮のデータ例）
+        EnemyData enemy = new EnemyData("スライム", 10, 5, 2);
+
+        // データを渡して戦闘シーンに移行
+        BattleManager.Instance.SetEnemyData(enemy);
+        SceneManager.LoadScene("BattleScene");
     }
 }
