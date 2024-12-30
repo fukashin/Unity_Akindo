@@ -45,6 +45,11 @@ public class NormalItemEditor : Editor
         normalItem.相場価格 = EditorGUILayout.IntField("相場価格", normalItem.相場価格);
         normalItem.需要 = EditorGUILayout.IntField("需要", normalItem.需要);
         normalItem.商品画像 = (Sprite)EditorGUILayout.ObjectField("商品画像", normalItem.商品画像, typeof(Sprite), false);
+        normalItem.所持最大数 = EditorGUILayout.IntField("所持最大数", normalItem.所持最大数);
+        normalItem.在庫最大数 = EditorGUILayout.IntField("在庫最大数", normalItem.在庫最大数);
+
+        
+
 
         // 必要素材リストの表示
         EditorGUILayout.LabelField("必要素材リスト", EditorStyles.boldLabel);
