@@ -21,6 +21,7 @@ public class InventoryManager : MonoBehaviour
     public List<BaseItem> 所持品アイテムリスト = new List<BaseItem>();
     public List<BaseItem> 陳列棚アイテムリスト = new List<BaseItem>();
 
+    /*
     void Awake()
     {
         // Resources フォルダ内から ItemDatabase をロード
@@ -31,40 +32,15 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("ItemDatabaseは読み込まれました。");
 
-            DebugList("読み取り倉庫アイテムリスト", itemDatabase.倉庫アイテムリスト);
-            DebugList("読み取り所持品アイテムリスト", itemDatabase.所持品アイテムリスト);
-            DebugList("読み取り陳列棚アイテムリスト", itemDatabase.陳列棚アイテムリスト);
         }
     }
-
-    // リストの内容をデバッグ表示するメソッド
-    void DebugList(string listName, List<BaseItem> itemList)
-    {
-        if (itemList != null && itemList.Count > 0)
-        {
-            Debug.Log($"{listName}のアイテム数: {itemList.Count}");
-            foreach (var item in itemList)
-            {
-                Debug.Log($"{listName} - アイテム名: {item.商品名}");
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"{listName}は空です。");
-        }
-    }
+    */
 
     private void Start()
     {
         // アイテムリストが正しく取得できているかを確認
         InitializeItemLists();  // ここで所持品リストを初期化
-
-        // アイテムリストが正しく取得できているかを確認
-        Debug.Log("所持品アイテムリストのアイテム数: " + 所持品アイテムリスト.Count);
-        Debug.Log("倉庫アイテムリストのアイテム数: " + 倉庫アイテムリスト.Count);
-        Debug.Log("陳列棚アイテムリストのアイテム数: " + 陳列棚アイテムリスト.Count);
 
         // ボタンにクリックイベントを登録
         所持品Button.onClick.AddListener(() => UpdateUI(所持品アイテムリスト));

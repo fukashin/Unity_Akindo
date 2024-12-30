@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
+using soubiSystem;
 
 [CustomEditor(typeof(EquipItem))]
 public class EquipItemEditor : Editor
@@ -31,10 +32,13 @@ public class EquipItemEditor : Editor
 
         // 他のフィールドの表示
         EditorGUILayout.LabelField("説明欄");
-        equipItem.説明欄 = EditorGUILayout.TextArea(equipItem.説明欄, EditorStyles.textArea, GUILayout.Height(60)); 
+        equipItem.説明欄 = EditorGUILayout.TextArea(equipItem.説明欄, EditorStyles.textArea, GUILayout.Height(60));
 
         // アイテムタイプの設定
         equipItem.アイテムタイプ = (ItemType)EditorGUILayout.EnumPopup("アイテムタイプ", equipItem.アイテムタイプ);
+
+        // 装備品カテゴリ設定（新しい設定）
+        equipItem.category = (EquipItem.EquipCategory)EditorGUILayout.EnumPopup("装備カテゴリ", equipItem.category);
 
         // アイテムタイプに応じた設定を追加（例：装備品専用の設定）
         if (equipItem.アイテムタイプ == ItemType.装備)

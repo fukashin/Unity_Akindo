@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3f2e8fb7b19c5d4b8352a772f997693, type: 3}
+  m_Name: "\u30B9\u30E9\u30A4\u30E0"
+  m_EditorClassIdentifier: 
+  enemyName: "\u30B9\u30E9\u30A4\u30E0"
+  health: 100
+  experiencePoints: 10
+  enemyImage: {fileID: 7288430116667035223, guid: eb250e78d05e33346bfe6d5c8a7c784f,
+    type: 3}
+  agility: 10
+  lootItems:
+  - item: {fileID: 11400000, guid: e47f77b900bd26d40a65eccf0b4a6b43, type: 2}
+    quantity: 1
+    dropRate: 100

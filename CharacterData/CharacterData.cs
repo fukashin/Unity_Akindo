@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using soubiSystem;
+using System;
 
 [CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Objects/CharacterData")]
 public class CharacterData : ScriptableObject
@@ -10,14 +12,22 @@ public class CharacterData : ScriptableObject
     [Header("ステータス")]
     [Tooltip("キャラクターの最大HP")]
     public int maxHP;            // 最大HP
+    [Tooltip("初期HP")]
+    public int currentHP;
+
+    [HideInInspector]
+    public int maxMP; //マジックポイント 後々使うかも
+
     [Tooltip("キャラクターの攻撃力")]
     public int attackPower;      // 攻撃力
     [Tooltip("キャラクターの防御力")]
     public int defensePower;     // 防御力
+    [Tooltip("キャラクターの俊敏力")]
+    public int agility;      // 移動速度
+    [Tooltip("キャラクターの行動力")]
+    public int workpower;      // 行動力
 
     [Header("その他の設定")]
-    [Tooltip("キャラクターの移動速度")]
-    public float moveSpeed;      // 移動速度
     [Tooltip("キャラクターのアイコン")]
     public Sprite characterIcon; // キャラクターのアイコン
     [Tooltip("キャラクターのプレハブ")]
@@ -39,26 +49,193 @@ public class CharacterData : ScriptableObject
     public List<BaseItem> inventory; // CharacterData内でBaseItemを使用
     public int maxInventorySize = 5; // 最大5種類まで
 
+    //[Header("装備品一覧")]
+    //public List<EquipItem> equippedItems = new List<EquipItem>(); // Listに変更　やっぱり戻した。
 
-    [Header("装備品")]
-    [Tooltip("武器")]
-    public EquipItem weapon;      // 武器
-    [Tooltip("頭装備")]
-    public EquipItem headGear;    // 頭装備
-    [Tooltip("胴体装備")]
-    public EquipItem bodyArmor;    // 胴体装備
-    [Tooltip("脚装備")]
-    public EquipItem leg;     // 脚装備
-    [Tooltip("手装備")]
-    public EquipItem hands;    // 手装備
-    [Tooltip("装飾品１")]
-    public EquipItem accessory1;  // 装飾品1
-    [Tooltip("装飾品２")]
-    public EquipItem accessory2;  // 装飾品2
+    [Header("装備品一覧")]
+    public EquipItem 武器;
+    public EquipItem 頭装備;
+    public EquipItem 胴体装備;
+    public EquipItem 脚装備;
+    public EquipItem 手装備;
+    public EquipItem 装飾品1;
+    public EquipItem 装飾品2;
+
+    [HideInInspector] public int totalAttack;
+    [HideInInspector] public int totalDefense;
+    [HideInInspector] public int totalHP;
+    [HideInInspector] public int totalMP;
+
+    // カテゴリごとの装備品を取得
+    public EquipItem GetEquippedItemByCategory(EquipItem.EquipCategory category)
+    {
+        switch (category)
+        {
+            case EquipItem.EquipCategory.武器:
+                return 武器;
+            case EquipItem.EquipCategory.頭装備:
+                return 頭装備;
+            case EquipItem.EquipCategory.胴体装備:
+                return 胴体装備;
+            case EquipItem.EquipCategory.脚装備:
+                return 脚装備;
+            case EquipItem.EquipCategory.手装備:
+                return 手装備;
+            case EquipItem.EquipCategory.装飾品1:
+                return 装飾品1;
+            case EquipItem.EquipCategory.装飾品2:
+                return 装飾品2;
+            default:
+                return null; // カテゴリが一致しない場合はnull
+        }
+    }
+
+    // 装備を変更するメソッド
+    public void EquipNewItem(EquipItem newItem)
+    {
+        switch (newItem.category)
+        {
+            case EquipItem.EquipCategory.武器:
+                武器 = newItem; // 武器を装備
+                break;
+            case EquipItem.EquipCategory.頭装備:
+                頭装備 = newItem; // 頭装備を装備
+                break;
+            case EquipItem.EquipCategory.胴体装備:
+                胴体装備 = newItem; // 胴体装備を装備
+                break;
+            case EquipItem.EquipCategory.脚装備:
+                脚装備 = newItem; // 脚装備を装備
+                break;
+            case EquipItem.EquipCategory.手装備:
+                手装備 = newItem; // 手装備を装備
+                break;
+            case EquipItem.EquipCategory.装飾品1:
+                装飾品1 = newItem; // 装飾品1を装備
+                break;
+            case EquipItem.EquipCategory.装飾品2:
+                装飾品2 = newItem; // 装飾品2を装備
+                break;
+        }
+    }
+
+    // 装備品の影響をステータスに反映させる
+    public void UpdateStatsFromEquipments()
+    {
+        totalAttack = attackPower;
+        totalDefense = defensePower;
+        totalHP = maxHP;
+        totalMP = maxMP;
+
+        // 各装備品からステータスの影響を加算
+        if (武器 != null)
+        {
+            totalAttack += 武器.攻撃力;
+            totalDefense += 武器.防御力;
+            totalHP += 武器.体力ボーナス;
+            totalMP += 武器.魔法力;
+        }
+
+        if (頭装備 != null)
+        {
+            totalAttack += 頭装備.攻撃力;
+            totalDefense += 頭装備.防御力;
+            totalHP += 頭装備.体力ボーナス;
+            totalMP += 頭装備.魔法力;
+        }
+
+        if (胴体装備 != null)
+        {
+            totalAttack += 胴体装備.攻撃力;
+            totalDefense += 胴体装備.防御力;
+            totalHP += 胴体装備.体力ボーナス;
+            totalMP += 胴体装備.魔法力;
+        }
+
+        if (脚装備 != null)
+        {
+            totalAttack += 脚装備.攻撃力;
+            totalDefense += 脚装備.防御力;
+            totalHP += 脚装備.体力ボーナス;
+            totalMP += 脚装備.魔法力;
+        }
+
+        if (手装備 != null)
+        {
+            totalAttack += 手装備.攻撃力;
+            totalDefense += 手装備.防御力;
+            totalHP += 手装備.体力ボーナス;
+            totalMP += 手装備.魔法力;
+        }
+
+        if (装飾品1 != null)
+        {
+            totalAttack += 装飾品1.攻撃力;
+            totalDefense += 装飾品1.防御力;
+            totalHP += 装飾品1.体力ボーナス;
+            totalMP += 装飾品1.魔法力;
+        }
+
+        if (装飾品2 != null)
+        {
+            totalAttack += 装飾品2.攻撃力;
+            totalDefense += 装飾品2.防御力;
+            totalHP += 装飾品2.体力ボーナス;
+            totalMP += 装飾品2.魔法力;
+        }
+    }
+
+    [Header("初期行動力")]
+    public int currentWorkpower;         // 現在の行動力
+    [Header("回復間隔毎のの回復量")]
+    public int workpowerRecoveryRate = 1; // 回復間隔ごとの回復量
+    [Header("回復間隔（秒）")]
+    public float recoveryInterval = 1; // 回復間隔（秒）: 300秒 = 5分
+    private DateTime lastRecoveryTime;   // 最後に回復した時刻
 
     // 次のレベルに必要な経験値を計算するメソッド
     public int GetXPToNextLevel()
     {
         return Mathf.FloorToInt(baseXP * Mathf.Pow(growthRate, level - 1));
+    }
+
+    public void UpdateWorkpower()
+    {
+        // 最初の呼び出し時にlastRecoveryTimeが初期化されていない場合があるので確認
+        if (lastRecoveryTime == default)
+            lastRecoveryTime = DateTime.Now;  // 初回のタイムスタンプを設定
+
+        // 経過時間を秒単位で計算
+        TimeSpan elapsedTime = DateTime.Now - lastRecoveryTime;
+
+        // 回復サイクルを計算
+        int recoveryCycles = Mathf.FloorToInt((float)elapsedTime.TotalSeconds / recoveryInterval);
+
+        if (recoveryCycles > 0)
+        {
+            // 回復量を設定
+            currentWorkpower = Mathf.Min(workpower, currentWorkpower + recoveryCycles * workpowerRecoveryRate);
+            // タイムスタンプを更新
+            lastRecoveryTime = lastRecoveryTime.AddSeconds(recoveryCycles * recoveryInterval);
+        }
+    }
+
+
+    private void OnEnable()
+    {
+        //実行時に行動力を０に設定
+        currentWorkpower = 0;
+
+        // ScriptableObjectがロードされたときに行動力を更新
+        UpdateWorkpower();
+
+        lastRecoveryTime = DateTime.Now;
+    }
+
+    public void ConsumeWorkpower(int amount)
+    {
+        UpdateWorkpower();
+        currentWorkpower = Mathf.Max(0, currentWorkpower - amount);
+        lastRecoveryTime = DateTime.Now; // 最後に消費した時間を記録
     }
 }

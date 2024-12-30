@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
+using soubiSystem;  // EquipCategoryを参照するためにインポート
 
 public class EquipmentUI : MonoBehaviour
 {
@@ -10,7 +10,6 @@ public class EquipmentUI : MonoBehaviour
 
     [Header("装備アイコン用のパネル")]
     public RectTransform equipmentPanel; // RectTransform型に変更
-
 
     private Dictionary<string, Image> equipmentIcons = new Dictionary<string, Image>();
 
@@ -45,34 +44,35 @@ public class EquipmentUI : MonoBehaviour
         }
 
         // 装備品アイコンを動的に設定
-        SetIcon("weapon", characterData.weapon);
-        SetIcon("headgear", characterData.headGear);
-        SetIcon("bodyarmor", characterData.bodyArmor);
-        SetIcon("leg", characterData.leg);
-        SetIcon("hands", characterData.hands);
-        SetIcon("accessory1", characterData.accessory1);
-        SetIcon("accessory2", characterData.accessory2);
+        SetIcon(EquipItem.EquipCategory.武器, characterData.GetEquippedItemByCategory(EquipItem.EquipCategory.武器));
+        SetIcon(EquipItem.EquipCategory.頭装備, characterData.GetEquippedItemByCategory(EquipItem.EquipCategory.頭装備));
+        SetIcon(EquipItem.EquipCategory.胴体装備, characterData.GetEquippedItemByCategory(EquipItem.EquipCategory.胴体装備));
+        SetIcon(EquipItem.EquipCategory.脚装備, characterData.GetEquippedItemByCategory(EquipItem.EquipCategory.脚装備));
+        SetIcon(EquipItem.EquipCategory.手装備, characterData.GetEquippedItemByCategory(EquipItem.EquipCategory.手装備));
+        SetIcon(EquipItem.EquipCategory.装飾品1, characterData.GetEquippedItemByCategory(EquipItem.EquipCategory.装飾品1));
+        SetIcon(EquipItem.EquipCategory.装飾品2, characterData.GetEquippedItemByCategory(EquipItem.EquipCategory.装飾品2));
     }
 
-    void SetIcon(string slotName, EquipItem item)
+    void SetIcon(EquipItem.EquipCategory category, EquipItem item)
     {
-        if (equipmentIcons.TryGetValue(slotName, out Image icon))
+        // アイテムが null でなければアイコンを設定
+        if (item != null && equipmentIcons.TryGetValue(category.ToString().ToLower(), out Image icon))
         {
-            if (item != null && item.商品画像 != null)
+            if (icon != null)
             {
                 icon.sprite = item.商品画像;
                 icon.gameObject.SetActive(true);
-                Debug.Log($"Icon set for {slotName}: {item.商品画像.name}");
-            }
-            else
-            {
-                icon.gameObject.SetActive(false);
-                Debug.LogWarning($"No image found for {slotName}");
+                Debug.Log($"{category} のアイコンが設定されました: {item.商品画像.name}");
             }
         }
         else
         {
-            Debug.LogWarning($"No icon found for slot: {slotName}");
+            // アイテムが null の場合、アイコンを非表示にする
+            if (equipmentIcons.TryGetValue(category.ToString().ToLower(), out Image iconToHide) && iconToHide != null)
+            {
+                iconToHide.gameObject.SetActive(false);
+                Debug.LogWarning($"{category} のアイコンは表示されません");
+            }
         }
     }
 }

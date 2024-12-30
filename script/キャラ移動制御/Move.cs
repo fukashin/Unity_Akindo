@@ -1,20 +1,32 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CharacterController : MonoBehaviour
+public class CharaController : MonoBehaviour
 {
+    [Header("通常の移動速度")]
     public float speed = 3.0f;              // 通常の移動速度
+    [Header("走るときの速度倍率")]
     public float runMultiplier = 1.5f;      // 走るときの速度倍率
     private Rigidbody2D rb;                 // Rigidbody2D コンポーネント
     private Vector2 inputAxis;              // 入力の方向
     private bool isRunning;                 // 走っているかの状態
     private Animator anim;                  // Animator
 
-    public int stepsToEncounter = 10;       // エンカウントまでの歩数
-    private int stepCount = 0;              // 現在の歩数
+    [Header("エンカウントまでの距離")]
+    public float encounterDistance = 10f;   // エンカウントまでに進む距離
+    private float totalDistance = 0f;       // 総移動距離
 
-    void Start()
+    [Header("エンカウント確率")]
+    [SerializeField, Range(0f, 1f)]         // インスペクターで調整可能、0〜1の範囲
+    private float encounterProbability = 0.5f; // エンカウントの確率
+
+    [Header("エンカウント出現モンスター")]
+    public EnemyData[] enemyPool; // エンカウント時に選ばれる敵のプール
+
+    [Header("キャラ")]
+    public CharacterData playerData; 
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();   // Rigidbody2D の取得
         anim = GetComponent<Animator>();    // Animator の取得
@@ -42,15 +54,13 @@ public class CharacterController : MonoBehaviour
         // アニメーションの設定
         setAnim(inputAxis);
 
-        // プレイヤーの移動を監視する
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
-            Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        // 総移動距離を加算
+        totalDistance += inputAxis.magnitude * Time.deltaTime * (isRunning ? runMultiplier : 1);
+
+        // エンカウントチェック
+        if (totalDistance >= encounterDistance)
         {
-            stepCount++;
-            if (stepCount >= stepsToEncounter)
-            {
-                TriggerEncounter();
-            }
+            TriggerEncounter();
         }
     }
 
@@ -76,15 +86,40 @@ public class CharacterController : MonoBehaviour
         anim.SetFloat("Y", vec2.y);
     }
 
+    private CharacterData GetPlayerData()
+    {
+        return playerData;
+    }
+
     void TriggerEncounter()
     {
-        stepCount = 0; // 歩数をリセット
+        totalDistance = 0f; // 総移動距離をリセット
 
-        // エンカウントした敵情報を設定（仮のデータ例）
-        EnemyData enemy = new EnemyData("スライム", 10, 5, 2);
+        // エンカウント判定（ランダム性を追加）
+        if (Random.Range(0f, 1f) <= encounterProbability) // インスペクターで調整可能
+        {
+            // 敵をランダムに選択
+            if (enemyPool.Length > 0)
+            {
 
-        // データを渡して戦闘シーンに移行
-        BattleManager.Instance.SetEnemyData(enemy);
-        SceneManager.LoadScene("BattleScene");
+                CharacterData player = GetPlayerData();
+                int randomIndex = Random.Range(0, enemyPool.Length);
+                EnemyData selectedEnemy = enemyPool[randomIndex];
+
+                // 選ばれた敵データ、キャラデータを戦闘シーンへ設定
+                BattleManager.Instance.SetEnemyData(selectedEnemy);
+                BattleManager.Instance.SetPlayerData(playerData);
+                SceneManager.LoadScene("戦闘シーン");
+            }
+            else
+            {
+                Debug.LogError("敵のプールが空です");
+            }
+        }
+        else
+        {
+            // エンカウントしなかった場合
+            Debug.Log("エンカウントなし");
+        }
     }
 }

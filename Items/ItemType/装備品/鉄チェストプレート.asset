@@ -26,6 +26,7 @@ MonoBehaviour:
   "\u5FC5\u8981\u7D20\u6750":
   - "\u7D20\u6750": {fileID: 11400000, guid: 5ba12998b8d86d144af387e819068df0, type: 2}
     "\u5FC5\u8981\u6570": 10
+  category: 2
   "\u653B\u6483\u529B": 0
   "\u9632\u5FA1\u529B": 3
   "\u8010\u4E45\u529B": 0

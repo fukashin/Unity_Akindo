@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: CharacterData
   m_EditorClassIdentifier: 
   characterName: "\u30F4\u30A1\u30EB"
-  maxHP: 20
+  maxHP: 100
+  currentHP: 50
+  maxMP: 0
   attackPower: 10
   defensePower: 10
-  moveSpeed: 10
+  agility: 10
+  workpower: 100
   characterIcon: {fileID: 0}
   prefab: {fileID: 0}
   level: 1
@@ -27,11 +30,22 @@ MonoBehaviour:
   inventory:
   - {fileID: 11400000, guid: 591ad0c52b8ab7740974a9b7b71cba96, type: 2}
   - {fileID: 11400000, guid: ac93c8d2ab332a348aacc929b81f524c, type: 2}
+  - {fileID: 11400000, guid: e3f244f31906eac4a8e6555acd45f25a, type: 2}
+  - {fileID: 11400000, guid: fd77720bcfc69cd4b8716e449d6487fb, type: 2}
   maxInventorySize: 5
-  weapon: {fileID: 11400000, guid: 591ad0c52b8ab7740974a9b7b71cba96, type: 2}
-  headGear: {fileID: 0}
-  bodyArmor: {fileID: 11400000, guid: ac93c8d2ab332a348aacc929b81f524c, type: 2}
-  leg: {fileID: 0}
-  hands: {fileID: 0}
-  accessory1: {fileID: 0}
-  accessory2: {fileID: 0}
+  "\u6B66\u5668": {fileID: 11400000, guid: 591ad0c52b8ab7740974a9b7b71cba96, type: 2}
+  "\u982D\u88C5\u5099": {fileID: 0}
+  "\u80F4\u4F53\u88C5\u5099": {fileID: 11400000, guid: ac93c8d2ab332a348aacc929b81f524c,
+    type: 2}
+  "\u811A\u88C5\u5099": {fileID: 11400000, guid: e3f244f31906eac4a8e6555acd45f25a,
+    type: 2}
+  "\u624B\u88C5\u5099": {fileID: 0}
+  "\u88C5\u98FE\u54C11": {fileID: 0}
+  "\u88C5\u98FE\u54C12": {fileID: 0}
+  totalAttack: 0
+  totalDefense: 0
+  totalHP: 0
+  totalMP: 0
+  currentWorkpower: 0
+  workpowerRecoveryRate: 1
+  recoveryInterval: 1
