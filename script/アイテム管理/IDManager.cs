@@ -52,6 +52,20 @@ public class IDManager : ScriptableObject
         //item.ID = GetNewID();  // アイテムに新しいIDを設定
     }
 
+        // 指定されたIDでアイテムを検索して返すメソッド
+    public BaseItem GetItemByID(int itemID)
+    {
+        foreach (var item in アイテムリスト)
+        {
+            if (item.ID == itemID) // IDが一致するアイテムを探す
+            {
+                return item; // 見つかったアイテムを返す
+            }
+        }
+        Debug.LogWarning($"ID {itemID} のアイテムが見つかりません。");
+        return null; // アイテムが見つからなければ null を返す
+    }
+
     // IDが重複しないか確認
     /*
     public bool IsIDUnique(int id)
