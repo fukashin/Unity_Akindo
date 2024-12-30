@@ -1536,11 +1536,14 @@ MonoBehaviour:
   AddToStorageButton: {fileID: 1871607085}
   AddToShelfButton: {fileID: 548789632}
   itemDatabase: {fileID: 11400000, guid: e29432a14b21d7946bba592998237583, type: 2}
+  idManager: {fileID: 11400000, guid: ecfd240e4fca753448069e0563dc70f0, type: 2}
   defaultSprite: {fileID: -452606618849389056, guid: 8653a184d74df2f4ebfde8f0fcd499d6,
     type: 3}
   "\u5009\u5EAB\u30A2\u30A4\u30C6\u30E0\u30EA\u30B9\u30C8": []
-  "\u6240\u6301\u54C1\u30A2\u30A4\u30C6\u30E0\u30EA\u30B9\u30C8": []
-  "\u9673\u5217\u68DA\u30A2\u30A4\u30C6\u30E0\u30EA\u30B9\u30C8": []
+  "\u6240\u6301\u54C1\u30A2\u30A4\u30C6\u30E0\u30EA\u30B9\u30C8":
+  - {fileID: 0}
+  "\u9673\u5217\u68DA\u30A2\u30A4\u30C6\u30E0\u30EA\u30B9\u30C8":
+  - {fileID: 0}
 --- !u!1 &744616123
 GameObject:
   m_ObjectHideFlags: 0
