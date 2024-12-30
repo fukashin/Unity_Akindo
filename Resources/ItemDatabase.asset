@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: ItemDatabase
   m_EditorClassIdentifier: 
   "\u5009\u5EAB\u30A2\u30A4\u30C6\u30E0\u30EA\u30B9\u30C8":
-  - {fileID: 11400000, guid: ac93c8d2ab332a348aacc929b81f524c, type: 2}
-  "\u6240\u6301\u54C1\u30A2\u30A4\u30C6\u30E0\u30EA\u30B9\u30C8":
-  - {fileID: 11400000, guid: 5ba12998b8d86d144af387e819068df0, type: 2}
+  - {fileID: 11400000, guid: 1d28358b20410804890a9224153232ee, type: 2}
+  "\u6240\u6301\u54C1\u30A2\u30A4\u30C6\u30E0\u30EA\u30B9\u30C8": []
   "\u9673\u5217\u68DA\u30A2\u30A4\u30C6\u30E0\u30EA\u30B9\u30C8":
-  - {fileID: 11400000, guid: 9a1f0f68b4f13db438a92575bfa4732b, type: 2}
+  - {fileID: 11400000, guid: 9a4bbc830fe840e4eb5e65a2740f6a04, type: 2}
