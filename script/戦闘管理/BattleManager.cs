@@ -1,92 +1,77 @@
 ﻿using UnityEngine;
-using TMPro;
 
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance { get; private set; }
 
-    public EnemyData currentEnemy;  // 現在の敵データ
-    public CharacterData currentPlayer;  // 現在のプレイヤーデータ（CharacterData）
-    private bool isPlayerTurn;  // プレイヤーのターンかどうか
+    [Header("グリッド設定")]
+    public int gridWidth = 8;  // 横幅
+    public int gridHeight = 4; // 縦幅
+    private CharacterData[,] battleGrid; // グリッド
 
-    public TextMeshProUGUI turnIndicatorText;  // ターンの結果を表示するTextMeshProUGUI
+    [Header("キャラクター位置管理")]
+    public Vector2Int playerPosition; // プレイヤーの初期位置
+    public Vector2Int enemyPosition;  // 敵の初期位置
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // シーンを超えてデータを保持
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
+
+        InitializeGrid();
     }
 
-    // 敵データの設定
-    public void SetEnemyData(EnemyData enemy)
+    // グリッド初期化
+    private void InitializeGrid()
     {
-        currentEnemy = enemy;
+        battleGrid = new CharacterData[gridWidth, gridHeight];
+        playerPosition = new Vector2Int(0, gridHeight / 2);
+        enemyPosition = new Vector2Int(gridWidth - 1, gridHeight / 2);
     }
 
-    // プレイヤーデータの設定
-    public void SetPlayerData(CharacterData player)
+    // キャラクターを配置する
+    public bool PlaceCharacter(CharacterData character, int x, int y)
     {
-        currentPlayer = player;
-    }
-
-    // 先制攻撃を決定
-    public void DetermineFirstTurn()
-    {
-        // 俊敏性を元に先制攻撃者を決定
-        int playerSpeed = currentPlayer.agility;  // プレイヤーの俊敏性
-        int enemySpeed = currentEnemy.agility;    // 敵の俊敏性
-
-        string playerName = currentPlayer.characterName;  // プレイヤー名
-        string enemyName = currentEnemy.enemyName;        // 敵名
-
-        // 俊敏性の高い方が先攻、同じ場合は確率で決定
-        if (playerSpeed > enemySpeed)
+        if (battleGrid[x, y] == null)
         {
-            isPlayerTurn = true; // プレイヤーが先攻
-            UpdateTurnUI($"{playerName} goes first.");  // UIに表示
+            battleGrid[x, y] = character;
+            return true;
         }
-        else if (playerSpeed < enemySpeed)
+        return false;
+    }
+
+    // グリッドをクリア
+    public void ClearGridPosition(int x, int y)
+    {
+        battleGrid[x, y] = null;
+    }
+
+    // グリッド状態を取得
+    public CharacterData GetCharacterAtPosition(int x, int y)
+    {
+        return battleGrid[x, y];
+    }
+
+    // デバッグ用グリッド表示
+    public void DisplayGrid()
+    {
+        for (int y = 0; y < gridHeight; y++)
         {
-            isPlayerTurn = false; // 敵が先攻
-            UpdateTurnUI($"{enemyName} goes first.");  // UIに表示
-        }
-        else
-        {
-            // 俊敏性が同じ場合はランダムで決定
-            float randomChance = Random.Range(0f, 1f);
-            if (randomChance >= 0.5f)
+            string row = "";
+            for (int x = 0; x < gridWidth; x++)
             {
-                isPlayerTurn = true; // プレイヤーが先攻
-                UpdateTurnUI($"{playerName} goes first.");  // UIに表示
+                row += battleGrid[x, y] != null ? battleGrid[x, y].characterName : "Empty";
+                row += "\t";
             }
-            else
-            {
-                isPlayerTurn = false; // 敵が先攻
-                UpdateTurnUI($"{enemyName} goes first.");  // UIに表示
-            }
+            Debug.Log(row);
         }
-    }
-
-    // UIのテキストを更新するメソッド
-    private void UpdateTurnUI(string message)
-    {
-        if (turnIndicatorText != null)
-        {
-            turnIndicatorText.text = message;  // ターンの結果をUIに表示
-        }
-    }
-
-    // ゲームのターン開始時に呼ばれるメソッド
-    public void StartBattle()
-    {
-        DetermineFirstTurn();  // 先制攻撃の決定
-        // その後、ターンに応じたアクションを開始する処理を追加
     }
 }
+
