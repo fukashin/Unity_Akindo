@@ -95,6 +95,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    //  アイテムの取得処理
     private void AddItemToList(List<BaseItem> list, int itemID, int quantity)
     {
         if (list == null)
@@ -108,7 +109,18 @@ public class InventoryManager : MonoBehaviour
         if (item != null)
         {
             // アイテムがすでに存在する場合は所持数を増加させる
-            item.所持数 += quantity;
+            int newQuantity = item.所持数 + quantity;
+            Debug.Log($"アイテムを追加しました: ID = {itemID}, 数量 = {quantity}");
+
+            if (newQuantity > item.所持最大数)
+            {
+                Debug.LogWarning($"アイテム {item.商品名} の所持数が最大値を超えるため、一部のみ追加されます。");
+                item.所持数 = item.所持最大数; // 所持数を最大値に設定
+            }
+            else
+            {
+                item.所持数 = newQuantity;
+            }
         }
         else
         {
@@ -119,6 +131,16 @@ public class InventoryManager : MonoBehaviour
                 BaseItem newItem = idManager.GetItemByID(itemID); // GetItemByIDはアイテムIDでアイテムを取得するメソッド
                 if (newItem != null)
                 {
+                    if (quantity > newItem.所持最大数)
+                    {
+                        Debug.LogWarning($"アイテム {newItem.商品名} の初期追加量が最大所持数を超えるため、最大値に調整されます。");
+                        newItem.所持数 = newItem.所持最大数; // 所持数を最大値に設定
+                    }
+                    else
+                    {
+                        newItem.所持数 = quantity;
+                    }
+
                     // 新しいアイテムをリストに追加
                     list.Add(newItem);
                 }
@@ -137,6 +159,7 @@ public class InventoryManager : MonoBehaviour
         UpdateUI(list);
         Debug.Log($"アイテムを追加しました: ID = {itemID}, 数量 = {quantity}");
     }
+
     private void OnItemClick(BaseItem item)
     {
         Debug.Log($"Clicked on item: {item.商品名}");

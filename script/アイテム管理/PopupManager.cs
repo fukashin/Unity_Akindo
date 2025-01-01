@@ -53,28 +53,63 @@ public class PopupManager : MonoBehaviour
     // 数量増加
     public void IncrementAmount()
     {
-        移動量++;
-        移動量_入力欄.text = 移動量.ToString();
+        if (移動量 < アイテム.所持数) // 所持数を超えないようにチェック
+        {
+            移動量++;
+            移動量_入力欄.text = 移動量.ToString();
+        }
+        else
+        {
+            Debug.LogWarning($"移動量が所持数 ({アイテム.所持数}) を超えることはできません。");
+        }
     }
 
     // 数量減少
     public void DecrementAmount()
     {
-        if (移動量 > 1)
+        if (移動量 > 1) // 移動量が1未満にならないように制限
         {
             移動量--;
             移動量_入力欄.text = 移動量.ToString();
         }
+        else
+        {
+            Debug.LogWarning("移動量は1未満にできません。");
+        }
     }
+
 
     // 倉庫に移動
     public void MoveToStorage()
     {
+        if (アイテム == null)
+        {
+            Debug.LogError("アイテムが設定されていません！");
+            return;
+        }
+
         if (アイテム.所持数 >= 移動量)
         {
-            アイテム.所持数 -= 移動量;
-            アイテム.在庫 += 移動量;
-            Debug.Log($"アイテム {アイテム.商品名} を倉庫に {移動量} 移動しました。");
+            int newStock = アイテム.在庫 + 移動量;
+
+            if (newStock > アイテム.在庫最大数)
+            {
+                // 在庫最大数を超えた場合の処理
+                int actualTransfer = アイテム.在庫最大数 - アイテム.在庫; // 実際に移動可能な数量
+                アイテム.所持数 -= actualTransfer;
+                アイテム.在庫 = アイテム.在庫最大数;
+
+                Debug.LogWarning($"アイテム {アイテム.商品名} の在庫数が最大値を超えるため、一部のみ移動されました。移動量: {actualTransfer}");
+            }
+            else
+            {
+                // 在庫最大数を超えない場合
+                アイテム.所持数 -= 移動量;
+                アイテム.在庫 += 移動量;
+
+                Debug.Log($"アイテム {アイテム.商品名} を倉庫に {移動量} 移動しました。");
+            }
+
             UpdateUI();
         }
         else
@@ -82,6 +117,7 @@ public class PopupManager : MonoBehaviour
             Debug.LogWarning("移動数量が不足しています。");
         }
     }
+
 
     // 陳列棚に移動
     public void MoveToShelf()
