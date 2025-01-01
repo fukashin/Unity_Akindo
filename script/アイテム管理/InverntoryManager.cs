@@ -160,7 +160,7 @@ public class InventoryManager : MonoBehaviour
         Debug.Log($"アイテムを追加しました: ID = {itemID}, 数量 = {quantity}");
     }
 
-    private void OnItemClick(BaseItem item)
+    private void OnItemClick(BaseItem item,int list)
     {
         Debug.Log($"Clicked on item: {item.商品名}");
 
@@ -168,7 +168,7 @@ public class InventoryManager : MonoBehaviour
         Debug.Log($"所持数: {item.所持数}, 在庫数: {item.在庫}");
 
         // カスタムUI（ダイアログなど）を表示
-        popupManager.ShowPopup(item);;
+        popupManager.ShowPopup(item,list);
     }
 
 
@@ -201,15 +201,27 @@ public class InventoryManager : MonoBehaviour
         {
             var row = Instantiate(itemPrefab, content);
             row.gameObject.SetActive(true);
-            Debug.Log("Instantiated row: " + row.name);
 
             // アイテムのボタンを設定
             var button = row.GetComponent<Button>();
             if (button != null)
             {
-                // ボタンにクリックイベントを設定
-                button.onClick.AddListener(() => OnItemClick(item));
+                // ボタンにクリックイベントを設
+                if(items == 所持品アイテムリスト)
+                {
+                    button.onClick.AddListener(() => OnItemClick(item, 1));
+                }
+                if(items == 倉庫アイテムリスト)
+                {
+                    button.onClick.AddListener(() => OnItemClick(item, 2));
+                }
+                if(items == 陳列棚アイテムリスト)
+                {
+                    button.onClick.AddListener(() => OnItemClick(item, 3));
+                }
+                
             }
+
 
             // アイコンの設定
             var itemImage = row.transform.Find("アイコン");
@@ -239,22 +251,8 @@ public class InventoryManager : MonoBehaviour
                 }
                 else
                 {
-                    stockText.text = item.在庫 != 0 ? $"在庫数: {item.在庫}" : "在庫なし";
+                    stockText.text = item.在庫 != 0 ? $" {item.在庫}" : "在庫なし";
                 }
-            }
-
-            // 相場価格の設定（TextMeshProUGUI）
-            var priceText = row.transform.Find("相場価格").GetComponent<TextMeshProUGUI>();
-            if (priceText != null)
-            {
-                priceText.text = item.相場価格 != 0 ? item.相場価格.ToString() : "相場価格未設定";
-            }
-
-            // 需要の設定（TextMeshProUGUI）
-            var demandText = row.transform.Find("需要").GetComponent<TextMeshProUGUI>();
-            if (demandText != null)
-            {
-                demandText.text = item.需要 != 0 ? item.需要.ToString() + "%" : "需要未設定";
             }
         }
 
