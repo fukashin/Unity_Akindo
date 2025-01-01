@@ -17,6 +17,7 @@ public class InventoryManager : MonoBehaviour
     public ItemDatabase itemDatabase;  // ItemDatabaseの参照
     public IDManager idManager; // IDManagerへの参照
     public Sprite defaultSprite;       // デフォルトのアイコン画像
+    public PopupManager popupManager; // PopupManager の参照
 
     public List<BaseItem> 倉庫アイテムリスト = new List<BaseItem>();
     public List<BaseItem> 所持品アイテムリスト = new List<BaseItem>();
@@ -60,6 +61,8 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         itemDatabase = Resources.Load<ItemDatabase>("ItemDatabase"); // "ItemDatabase" はアセットの名前
+        // ポップアップマネーシャーを読み込み
+        popupManager = FindObjectOfType<PopupManager>();
         // アイテムリストが正しく取得できているかを確認
         InitializeItemLists();  // ここで所持品リストを初期化
 
@@ -135,6 +138,16 @@ public class InventoryManager : MonoBehaviour
         UpdateUI(list);
         Debug.Log($"アイテムを追加しました: ID = {itemID}, 数量 = {quantity}");
     }
+    private void OnItemClick(BaseItem item)
+    {
+        Debug.Log($"Clicked on item: {item.商品名}");
+
+        // 所持数・在庫数を表示
+        Debug.Log($"所持数: {item.所持数}, 在庫数: {item.在庫}");
+
+        // カスタムUI（ダイアログなど）を表示
+        popupManager.ShowPopup(item);;
+    }
 
 
     private void UpdateUI(List<BaseItem> items)
@@ -160,11 +173,21 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
+        
+
         foreach (var item in items)
         {
             var row = Instantiate(itemPrefab, content);
             row.gameObject.SetActive(true);
             Debug.Log("Instantiated row: " + row.name);
+
+            // アイテムのボタンを設定
+            var button = row.GetComponent<Button>();
+            if (button != null)
+            {
+                // ボタンにクリックイベントを設定
+                button.onClick.AddListener(() => OnItemClick(item));
+            }
 
             // アイコンの設定
             var itemImage = row.transform.Find("アイコン");
@@ -188,11 +211,11 @@ public class InventoryManager : MonoBehaviour
             var stockText = row.transform.Find("在庫").GetComponent<TextMeshProUGUI>();
             if (stockText != null)
             {
-                if(items == 所持品アイテムリスト)
+                if (items == 所持品アイテムリスト)
                 {
-                    stockText.text = item.所持数 != 0 ? $"所持数: {item.所持数}" : "所持数なし";
+                    stockText.text = item.所持数 != 0 ? $" {item.所持数}" : "所持数なし";
                 }
-                else  // 他のリストの場合（倉庫、陳列棚など）
+                else
                 {
                     stockText.text = item.在庫 != 0 ? $"在庫数: {item.在庫}" : "在庫なし";
                 }
@@ -209,8 +232,9 @@ public class InventoryManager : MonoBehaviour
             var demandText = row.transform.Find("需要").GetComponent<TextMeshProUGUI>();
             if (demandText != null)
             {
-                demandText.text = item.需要 != 0 ? item.需要.ToString() +"%" : "需要未設定";
+                demandText.text = item.需要 != 0 ? item.需要.ToString() + "%" : "需要未設定";
             }
         }
+
     }
 }
