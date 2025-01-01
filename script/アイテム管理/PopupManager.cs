@@ -68,8 +68,10 @@ public class PopupManager : MonoBehaviour
         switch (listType)
         {
             case 1: // 所持品アイテムリスト
+            倉庫へ移動ボタン.GetComponentInChildren<TextMeshProUGUI>().text = "倉庫へ移動";
                 倉庫へ移動ボタン.gameObject.SetActive(true);
                 陳列棚へ移動ボタン.gameObject.SetActive(true);
+                陳列棚へ移動ボタン.GetComponentInChildren<TextMeshProUGUI>().text = "陳列棚へ移動";
                 倉庫へ移動ボタン.onClick.AddListener(() => MoveToStorage());
                 Debug.Log("所持アイテムリスト");
                 break;
@@ -77,6 +79,7 @@ public class PopupManager : MonoBehaviour
             case 2: // 倉庫アイテムリスト
                 倉庫へ移動ボタン.GetComponentInChildren<TextMeshProUGUI>().text = "所持品へ移動";
                 倉庫へ移動ボタン.gameObject.SetActive(true);
+                陳列棚へ移動ボタン.GetComponentInChildren<TextMeshProUGUI>().text = "陳列棚へ移動";
                 陳列棚へ移動ボタン.gameObject.SetActive(true);
 
                 倉庫へ移動ボタン.onClick.RemoveAllListeners();
@@ -158,6 +161,10 @@ public class PopupManager : MonoBehaviour
                 アイテム.在庫 += 移動量;
 
                 Debug.Log($"アイテム {アイテム.商品名} を倉庫に {移動量} 移動しました。");
+            }
+            if (アイテム.所持数 == 0)
+            {
+                所持品アイテムリスト.Remove(アイテム);
             }
 
             UpdateUI();
