@@ -106,9 +106,7 @@ public class CharaController : MonoBehaviour
                 int randomIndex = Random.Range(0, enemyPool.Length);
                 EnemyData selectedEnemy = enemyPool[randomIndex];
 
-                // 選ばれた敵データ、キャラデータを戦闘シーンへ設定
-                BattleManager.Instance.SetEnemyData(selectedEnemy);
-                BattleManager.Instance.SetPlayerData(playerData);
+                // 戦闘シーンへ移行
                 SceneManager.LoadScene("戦闘シーン");
             }
             else

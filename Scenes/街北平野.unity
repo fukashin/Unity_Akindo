@@ -1868,9 +1868,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85d440802e31d645aaf5dbf2c60972b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentEnemy: {fileID: 0}
-  currentPlayer: {fileID: 0}
-  turnIndicatorText: {fileID: 0}
+  gridWidth: 8
+  gridHeight: 4
+  playerPosition: {x: 0, y: 0}
+  enemyPosition: {x: 0, y: 0}
 --- !u!4 &639260796
 Transform:
   m_ObjectHideFlags: 0
