@@ -4,69 +4,94 @@ using TMPro;
 
 public class PopupManager : MonoBehaviour
 {
-    public GameObject popup;          // ポップアップの親オブジェクト
-    public TextMeshProUGUI itemName;  // アイテム名表示
-    public TextMeshProUGUI stockText; // 所持数/在庫数表示
-    public InputField moveAmountInput; // 移動する量
-    public Button incrementButton;    // 数量を増加させるボタン
-    public Button decrementButton;    // 数量を減少させるボタン
-    public Button moveToStorageButton; // 倉庫に移動するボタン
-    public Button moveToShelfButton;   // 陳列棚に移動するボタン
-    public InputField shelfPriceInput; // 陳列棚の価格設定
+    public GameObject アイテム出し入れポップアップ;          // ポップアップの親オブジェクト
+    public Image アイテム_アイコン;  // アイテム画像表示
+    public TextMeshProUGUI アイテム名_表示;  // アイテム名表示
+    public TextMeshProUGUI 所持数_在庫数_表示; // 所持数/在庫数表示
+    public TMP_InputField 移動量_入力欄; // 移動する量
+    public Button 増加ボタン;    // 数量を増加させるボタン
+    public Button 減少ボタン;    // 数量を減少させるボタン
+    public Button 倉庫へ移動ボタン; // 倉庫に移動するボタン
+    public Button 陳列棚へ移動ボタン;   // 陳列棚に移動するボタン
+    public TMP_InputField 陳列棚_価格設定_入力欄; // 陳列棚の価格設定
 
-    private BaseItem currentItem;     // 現在選択されているアイテム
-    private int currentMoveAmount = 1; // 現在の移動数量
+    private BaseItem アイテム;     // 現在選択されているアイテム
+    private int 移動量 = 1; // 現在の移動数量
+    public Button バツボタン;
+
+
+    private void Start()
+    {
+        // ボタンのクリックイベントを紐付け
+        増加ボタン.onClick.AddListener(IncrementAmount);
+        減少ボタン.onClick.AddListener(DecrementAmount);
+        倉庫へ移動ボタン.onClick.AddListener(MoveToStorage);
+        陳列棚へ移動ボタン.onClick.AddListener(MoveToShelf);
+        バツボタン.onClick.AddListener(ClosePopup);
+        
+    }
 
     // ポップアップを初期化して表示
     public void ShowPopup(BaseItem item)
     {
-        currentItem = item;
-        popup.SetActive(true);
-        itemName.text = item.商品名;
-        stockText.text = $"所持数: {item.所持数} / 在庫数: {item.在庫}";
-        currentMoveAmount = 1;
-        moveAmountInput.text = currentMoveAmount.ToString();
-        shelfPriceInput.text = ""; // 値段設定を初期化
+        アイテム = item;
+        アイテム出し入れポップアップ.SetActive(true);
+
+        // アイコンを設定
+        if (アイテム_アイコン != null)
+        {
+            アイテム_アイコン.sprite = item.商品画像;
+        }
+
+        アイテム名_表示.text = item.商品名;
+        所持数_在庫数_表示.text = $"所持数: {item.所持数} / 在庫数: {item.在庫}";
+        移動量 = 1;
+        移動量_入力欄.text = 移動量.ToString();
+        陳列棚_価格設定_入力欄.text = ""; // 値段設定を初期化
     }
 
     // 数量増加
     public void IncrementAmount()
     {
-        currentMoveAmount++;
-        moveAmountInput.text = currentMoveAmount.ToString();
+        移動量++;
+        移動量_入力欄.text = 移動量.ToString();
     }
 
     // 数量減少
     public void DecrementAmount()
     {
-        if (currentMoveAmount > 1)
+        if (移動量 > 1)
         {
-            currentMoveAmount--;
-            moveAmountInput.text = currentMoveAmount.ToString();
+            移動量--;
+            移動量_入力欄.text = 移動量.ToString();
         }
     }
 
     // 倉庫に移動
     public void MoveToStorage()
     {
-        if (currentItem.所持数 >= currentMoveAmount)
+        if (アイテム.所持数 >= 移動量)
         {
-            currentItem.所持数 -= currentMoveAmount;
-            currentItem.在庫 += currentMoveAmount;
-            Debug.Log($"アイテム {currentItem.商品名} を倉庫に {currentMoveAmount} 移動しました。");
+            アイテム.所持数 -= 移動量;
+            アイテム.在庫 += 移動量;
+            Debug.Log($"アイテム {アイテム.商品名} を倉庫に {移動量} 移動しました。");
             UpdateUI();
+        }
+        else
+        {
+            Debug.LogWarning("移動数量が不足しています。");
         }
     }
 
     // 陳列棚に移動
     public void MoveToShelf()
     {
-        if (int.TryParse(shelfPriceInput.text, out int price) && currentItem.所持数 >= currentMoveAmount)
+        if (int.TryParse(陳列棚_価格設定_入力欄.text, out int price) && アイテム.所持数 >= 移動量)
         {
-            currentItem.所持数 -= currentMoveAmount;
-            currentItem.在庫 += currentMoveAmount; // 必要に応じて在庫を操作
-            currentItem.相場価格 = price;
-            Debug.Log($"アイテム {currentItem.商品名} を陳列棚に {currentMoveAmount} 移動しました。価格: {price}");
+            アイテム.所持数 -= 移動量;
+            アイテム.在庫 += 移動量; // 必要に応じて在庫を操作
+            アイテム.相場価格 = price;
+            Debug.Log($"アイテム {アイテム.商品名} を陳列棚に {移動量} 移動しました。価格: {price}");
             UpdateUI();
         }
         else
@@ -78,11 +103,11 @@ public class PopupManager : MonoBehaviour
     // ポップアップを非表示にする
     public void ClosePopup()
     {
-        popup.SetActive(false);
+        アイテム出し入れポップアップ.SetActive(false);
     }
 
     private void UpdateUI()
     {
-        stockText.text = $"所持数: {currentItem.所持数} / 在庫数: {currentItem.在庫}";
+        所持数_在庫数_表示.text = $"所持数: {アイテム.所持数} / 在庫数: {アイテム.在庫}";
     }
 }

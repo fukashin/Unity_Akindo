@@ -62,7 +62,6 @@ public class InventoryManager : MonoBehaviour
     {
         itemDatabase = Resources.Load<ItemDatabase>("ItemDatabase"); // "ItemDatabase" はアセットの名前
         // ポップアップマネーシャーを読み込み
-        popupManager = FindObjectOfType<PopupManager>();
         // アイテムリストが正しく取得できているかを確認
         InitializeItemLists();  // ここで所持品リストを初期化
 
