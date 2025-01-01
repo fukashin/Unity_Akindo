@@ -254,6 +254,19 @@ public class InventoryManager : MonoBehaviour
                     stockText.text = item.在庫 != 0 ? $" {item.在庫}" : "在庫なし";
                 }
             }
+            // 相場価格の設定（TextMeshProUGUI）
+            var priceText = row.transform.Find("相場価格").GetComponent<TextMeshProUGUI>();
+            if (priceText != null)
+            {
+                priceText.text = item.相場価格 != 0 ? item.相場価格.ToString() : "相場価格未設定";
+            }
+
+            // 需要の設定（TextMeshProUGUI）
+            var demandText = row.transform.Find("需要").GetComponent<TextMeshProUGUI>();
+            if (demandText != null)
+            {
+                demandText.text = item.需要 != 0 ? item.需要.ToString() +"%" : "需要未設定";
+            }
         }
 
     }
