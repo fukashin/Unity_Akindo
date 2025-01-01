@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using soubiSystem;  // EquipCategoryを参照するためにインポート
 
+//画面に主人公が装備しているものをアイコンでUIに表示させるためのクラス
 public class EquipmentUI : MonoBehaviour
 {
     [Header("キャラクターのデータ")]

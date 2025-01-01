@@ -7,6 +7,7 @@ namespace soubiSystem  // 装備関連の名前空間に変更
     public class EquipItem : BaseItem
     {
         public EquipCategory category;
+        public WeaponCategory weaponCategory; 
         public int 攻撃力;              // 装備の攻撃力
         public int 防御力;              // 装備の防御力
         public int 耐久力;              // 装備の耐久力
@@ -29,5 +30,16 @@ namespace soubiSystem  // 装備関連の名前空間に変更
             装飾品1,
             装飾品2
         }
+    }
+
+    // 武器カテゴリーを追加
+    public enum WeaponCategory
+    {
+        近接,  // 近接武器
+        遠距離,  // 遠距離武器
+        魔法,  // 魔法系武器
+        弓,  // 弓系武器（遠距離の一種）
+        大剣,  // 大剣など（近接の一種）
+        短剣  // 短剣など（近接の一種）
     }
 }

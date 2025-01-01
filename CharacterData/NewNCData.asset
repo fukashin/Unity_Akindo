@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0a43969c7eae34c81b598c06ded9e3, type: 3}
+  m_Name: NewNCData
+  m_EditorClassIdentifier: 
+  Unitname: 
+  Unitagility: 0
+  HP: 0
+  NCName: "\u30AD\u30E3\u30E998"
+  maxHP: 161
+  currentHP: 53
+  maxMP: 0
+  attackPower: 17
+  defensePower: 10
+  agility: 6
+  characterIcon: {fileID: 0}
+  prefab: {fileID: 0}
+  level: 1
+  currentXP: 0
+  baseXP: 100
+  growthRate: 1.2385283
+  skills: []
+  inventory: []
+  maxInventorySize: 5
+  "\u6B66\u5668": {fileID: 0}
+  "\u982D\u88C5\u5099": {fileID: 0}
+  "\u80F4\u4F53\u88C5\u5099": {fileID: 0}
+  "\u811A\u88C5\u5099": {fileID: 0}
+  "\u624B\u88C5\u5099": {fileID: 0}
+  "\u88C5\u98FE\u54C11": {fileID: 0}
+  "\u88C5\u98FE\u54C12": {fileID: 0}
+  totalAttack: 0
+  totalDefense: 0
+  totalHP: 0
+  totalMP: 0

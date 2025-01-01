@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
+
 
 public class CharaController : MonoBehaviour
 {
@@ -21,10 +23,10 @@ public class CharaController : MonoBehaviour
     private float encounterProbability = 0.5f; // エンカウントの確率
 
     [Header("エンカウント出現モンスター")]
-    public EnemyData[] enemyPool; // エンカウント時に選ばれる敵のプール
+    public EnemyPartyData[] enemyPartyPool; // エンカウント時に選ばれる敵パーティのプール
 
-    [Header("キャラ")]
-    public CharacterData playerData; 
+    [Header("プレイヤーパーティデータ")]
+    public PartyData playerPartyData;      // プレイヤーパーティデータの設定
 
     private void Start()
     {
@@ -88,7 +90,8 @@ public class CharaController : MonoBehaviour
 
     private CharacterData GetPlayerData()
     {
-        return playerData;
+        // PartyData から主人公のデータを取得
+        return playerPartyData.主人公.FirstOrDefault();  // 最初の主人公を取得
     }
 
     void TriggerEncounter()
@@ -98,20 +101,27 @@ public class CharaController : MonoBehaviour
         // エンカウント判定（ランダム性を追加）
         if (Random.Range(0f, 1f) <= encounterProbability) // インスペクターで調整可能
         {
-            // 敵をランダムに選択
-            if (enemyPool.Length > 0)
+            // エネミーパーティをランダムに選択
+            if (enemyPartyPool.Length > 0)
             {
+                int randomIndex = Random.Range(0, enemyPartyPool.Length);
+                EnemyPartyData selectedEnemyParty = enemyPartyPool[randomIndex];
 
-                CharacterData player = GetPlayerData();
-                int randomIndex = Random.Range(0, enemyPool.Length);
-                EnemyData selectedEnemy = enemyPool[randomIndex];
+                // 選ばれたエネミーパーティのメンバーをログに出力（デバッグ用）
+                foreach (var enemy in selectedEnemyParty.enemies)
+                {
+                    Debug.Log("Encountered: " + enemy.enemyName);
+                }
+
+                // BattleManagerにパーティデータを設定
+                BattleManager.Instance.SetPartyData(playerPartyData, selectedEnemyParty);
 
                 // 戦闘シーンへ移行
                 SceneManager.LoadScene("戦闘シーン");
             }
             else
             {
-                Debug.LogError("敵のプールが空です");
+                Debug.LogError("エネミーパーティのプールが空です");
             }
         }
         else

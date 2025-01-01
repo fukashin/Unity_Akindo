@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using soubiSystem;
+using System;
 
-[CreateAssetMenu(fileName = "NCData", menuName = "Scriptable Objects/NCData")]  //NC　＝ NPC Characterの略
-public class NCData : ScriptableObject
+[CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Objects/CharacterData")]
+public class CharacterData : UnitData
 {
     [Header("キャラクター基本情報")]
-    public string NCName; // キャラクター名　
+    public string characterName; // キャラクター名　テスト
 
     [Header("ステータス")]
     [Tooltip("キャラクターの最大HP")]
     public int maxHP;            // 最大HP
-    [Tooltip("初期HP")]
-    public int currentHP;        //初期HP
+    [Tooltip("現在のHP")]
+    public int currentHP;
 
     [HideInInspector]
     public int maxMP; //マジックポイント 後々使うかも
@@ -23,6 +24,8 @@ public class NCData : ScriptableObject
     public int defensePower;     // 防御力
     [Tooltip("キャラクターの俊敏性")]
     public int agility;      // 俊敏性
+    [Tooltip("キャラクターの行動力")]
+    public int workpower;      // 行動力
 
     [Header("その他の設定")]
     [Tooltip("キャラクターのアイコン")]
@@ -45,6 +48,18 @@ public class NCData : ScriptableObject
     [Header("所持品")]
     public List<BaseItem> inventory; // CharacterData内でBaseItemを使用
     public int maxInventorySize = 5; // 最大5種類まで
+
+    //基底クラスの情報管理
+    private void OnValidate()
+    {
+        SetUnitCharacterData();
+    }
+    public void SetUnitCharacterData()
+    {
+        Unitname = characterName; // 基底クラスのUnitnameにキャラクターの名前を設定
+        HP = currentHP;           //基底クラスのHPにキャラクターの現在の体力を設定
+        Unitagility = agility;    //基底クラスのアジリティに、キャラクターデータのアジリティを設定
+    }
 
     [Header("装備品一覧")]
     public EquipItem 武器;
@@ -111,6 +126,7 @@ public class NCData : ScriptableObject
                 装飾品2 = newItem; // 装飾品2を装備
                 break;
         }
+        UpdateStatsFromEquipments(); // 装備変更後にステータスを更新
     }
 
     // 装備品の影響をステータスに反映させる
@@ -179,6 +195,15 @@ public class NCData : ScriptableObject
         }
     }
 
+    [Header("初期行動力")]
+    public int currentWorkpower;         // 現在の行動力
+    [Header("回復間隔毎のの回復量")]
+    public int workpowerRecoveryRate = 1; // 回復間隔ごとの回復量
+    [Header("回復間隔（秒）")]
+    public float recoveryInterval = 1; // 回復間隔（秒）: 300秒 = 5分
+    private DateTime lastRecoveryTime;   // 最後に回復した時刻
+
+
     // 次のレベルに必要な経験値を計算するメソッド
     public int GetXPToNextLevel()
     {
@@ -193,17 +218,81 @@ public class NCData : ScriptableObject
             currentXP -= GetXPToNextLevel();
             level++;
             // レベルアップ時にステータスを上げるなどの処理を追加できます
-            Debug.Log($"{NCName} leveled up! Now level {level}");
+            Debug.Log($"{characterName} leveled up! Now level {level}");
         }
     }
 
-    public int MaintenanceCost
+
+
+    public void UpdateWorkpower()
     {
-        get
+        // 最初の呼び出し時にlastRecoveryTimeが初期化されていない場合があるので確認
+        if (lastRecoveryTime == default)
+            lastRecoveryTime = DateTime.Now;  // 初回のタイムスタンプを設定
+
+        // 経過時間を秒単位で計算
+        TimeSpan elapsedTime = DateTime.Now - lastRecoveryTime;
+
+        // 回復サイクルを計算
+        int recoveryCycles = Mathf.FloorToInt((float)elapsedTime.TotalSeconds / recoveryInterval);
+
+        if (recoveryCycles > 0)
         {
-            // レベル、攻撃力、防御力、俊敏性を維持費とする
-            return (level * 50) + (attackPower * 5) + (defensePower * 4) + (agility * 3);
+            // 回復量を設定
+            currentWorkpower = Mathf.Min(workpower, currentWorkpower + recoveryCycles * workpowerRecoveryRate);
+            // タイムスタンプを更新
+            lastRecoveryTime = lastRecoveryTime.AddSeconds(recoveryCycles * recoveryInterval);
         }
     }
+
+
+    private void OnEnable()
+    {
+        //実行時に行動力を０に設定
+        currentWorkpower = 0;
+
+        // ScriptableObjectがロードされたときに行動力を更新
+        UpdateWorkpower();
+
+        lastRecoveryTime = DateTime.Now;
+    }
+
+    public void ConsumeWorkpower(int amount)
+    {
+        UpdateWorkpower();
+        currentWorkpower = Mathf.Max(0, currentWorkpower - amount);
+        lastRecoveryTime = DateTime.Now; // 最後に消費した時間を記録
+    }
+
+    // アイテムを所持品に追加
+    public void AddItemToInventory(BaseItem item)
+    {
+        if (inventory.Count < maxInventorySize)
+        {
+            inventory.Add(item);
+        }
+        else
+        {
+            Debug.Log("Inventory full! Cannot add more items.");
+        }
+    }
+
+    // アイテムを所持品から削除
+    public void RemoveItemFromInventory(BaseItem item)
+    {
+        if (inventory.Contains(item))
+        {
+            inventory.Remove(item);
+        }
+    }
+
+    public override void TakeTurn()
+    {
+        base.TakeTurn();  // 基本的なターン処理を呼び出し（IsDead のチェックなど）
+
+        if (IsDead) return;
+        // キャラクターのターン処理をここで実装
+    }
+
 
 }

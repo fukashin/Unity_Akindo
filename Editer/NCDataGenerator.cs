@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class NCDataGenerator : EditorWindow
 {
@@ -9,13 +10,14 @@ public class NCDataGenerator : EditorWindow
         GetWindow<NCDataGenerator>("NCData Generator");
     }
 
-    private string fileName = "NewNCData";
+    private static List<string> nameList = new List<string>
+    {
+        "アリス", "ボブ", "チャーリー", "デイヴィッド", "エマ", "フランク", "グレース", "ハンナ", "イヴ", "ジャック"
+    };
 
     private void OnGUI()
     {
         GUILayout.Label("ランダムNCData生成", EditorStyles.boldLabel);
-
-        fileName = EditorGUILayout.TextField("ファイル名", fileName);
 
         if (GUILayout.Button("ランダム生成"))
         {
@@ -29,7 +31,8 @@ public class NCDataGenerator : EditorWindow
         NCData newNCData = ScriptableObject.CreateInstance<NCData>();
 
         // ランダムデータの割り当て
-        newNCData.NCName = "キャラ" + Random.Range(1, 100);
+        int randomIndex = Random.Range(0, nameList.Count);
+        newNCData.NCName = nameList[randomIndex];  // ランダムなキャラ名を設定
         newNCData.maxHP = Random.Range(50, 200);
         newNCData.currentHP = Random.Range(10, newNCData.maxHP);
         newNCData.attackPower = Random.Range(5, 20);
@@ -38,11 +41,21 @@ public class NCDataGenerator : EditorWindow
         newNCData.level = 1;
         newNCData.baseXP = 100;
         newNCData.growthRate = Random.Range(1.1f, 1.5f);
-        newNCData.skills = new System.Collections.Generic.List<string>(); //空のリスト
-        newNCData.inventory = new System.Collections.Generic.List<BaseItem>(); // 空のリスト
+        newNCData.skills = new List<string>(); // 空のリスト
+        newNCData.inventory = new List<BaseItem>(); // 空のリスト
+
+        // ファイル名にキャラ名を使用
+        string fileName = newNCData.NCName.Replace(" ", "_"); // 空白があればアンダースコアに置き換え（ファイル名として適切な形式に）
+                                                              // フォルダが存在しない場合に作成
+        if (!System.IO.Directory.Exists("Assets/NCData"))
+        {
+            System.IO.Directory.CreateDirectory("Assets/NCData");
+        }
+
+        // ランダムなキャラクター名をファイル名として設定
+        string path = $"Assets/NCData/{newNCData.NCName}.asset";
 
         // ScriptableObjectをアセットとして保存
-        string path = $"Assets/NCData/{fileName}.asset";
         AssetDatabase.CreateAsset(newNCData, path);
         AssetDatabase.SaveAssets();
 

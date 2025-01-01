@@ -27,10 +27,10 @@ public class EquipItemEditor : Editor
         // ID表示
         equipItem.ID = EditorGUILayout.IntField("iD", equipItem.ID);
 
-        //商品名表示
+        // 商品名表示
         equipItem.商品名 = EditorGUILayout.TextField("商品名", equipItem.商品名);
 
-        // 他のフィールドの表示
+        // 説明欄表示（BaseItemに定義された説明欄を表示）
         EditorGUILayout.LabelField("説明欄");
         equipItem.説明欄 = EditorGUILayout.TextArea(equipItem.説明欄, EditorStyles.textArea, GUILayout.Height(60));
 
@@ -39,6 +39,12 @@ public class EquipItemEditor : Editor
 
         // 装備品カテゴリ設定（新しい設定）
         equipItem.category = (EquipItem.EquipCategory)EditorGUILayout.EnumPopup("装備カテゴリ", equipItem.category);
+
+        // 装備カテゴリーが「武器」のときだけ、武器カテゴリを表示
+        if (equipItem.category == EquipItem.EquipCategory.武器)
+        {
+            equipItem.weaponCategory = (WeaponCategory)EditorGUILayout.EnumPopup("武器カテゴリ", equipItem.weaponCategory);
+        }
 
         // アイテムタイプに応じた設定を追加（例：装備品専用の設定）
         if (equipItem.アイテムタイプ == ItemType.装備)
