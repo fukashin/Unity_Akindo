@@ -23,6 +23,8 @@ public class InventoryManager : MonoBehaviour
     public List<BaseItem> 所持品アイテムリスト = new List<BaseItem>();
     public List<BaseItem> 陳列棚アイテムリスト = new List<BaseItem>();
 
+    private int currentListType; // 現在のリストタイプを記録
+
     // void Awake()
     // {
     //     // Resources フォルダ内から ItemDatabase をロード
@@ -79,6 +81,27 @@ public class InventoryManager : MonoBehaviour
         AddToInventoryButton.onClick.AddListener(() => AddItemToList(所持品アイテムリスト, 1, 1));
         AddToStorageButton.onClick.AddListener(() => AddItemToList(倉庫アイテムリスト, 2, 1));
         AddToShelfButton.onClick.AddListener(() => AddItemToList(陳列棚アイテムリスト, 3, 1));
+
+        // PopupManager のイベントを購読
+        popupManager.OnPopupClosed += HandlePopupClosed;
+    }
+
+    // ポップアップが閉じられた際に実行される処理
+    private void HandlePopupClosed()
+    {
+        // 現在のリストを基に UI を更新
+        if (currentListType == 1)
+        {
+            UpdateUI(所持品アイテムリスト);
+        }
+        else if (currentListType == 2)
+        {
+            UpdateUI(倉庫アイテムリスト);
+        }
+        else if (currentListType == 3)
+        {
+            UpdateUI(陳列棚アイテムリスト);
+        }
     }
 
     private void InitializeItemLists()
@@ -160,15 +183,16 @@ public class InventoryManager : MonoBehaviour
         Debug.Log($"アイテムを追加しました: ID = {itemID}, 数量 = {quantity}");
     }
 
-    private void OnItemClick(BaseItem item,int list)
+    private void OnItemClick(BaseItem item,int listType)
     {
         Debug.Log($"Clicked on item: {item.商品名}");
+        currentListType = listType; // リストタイプを記録
 
         // 所持数・在庫数を表示
         Debug.Log($"所持数: {item.所持数}, 在庫数: {item.在庫}");
 
         // カスタムUI（ダイアログなど）を表示
-        popupManager.ShowPopup(item,list);
+        popupManager.ShowPopup(item,listType);
     }
 
 
@@ -195,10 +219,27 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        
+        // 削除対象アイテムのリストを準備
+        List<BaseItem> itemsToRemove = new List<BaseItem>();
 
         foreach (var item in items)
         {
+            // 所持数または在庫が0の場合は削除対象に追加
+            if (items == 所持品アイテムリスト && item.所持数 == 0)
+            {
+                itemsToRemove.Add(item);
+                Debug.Log($"Removing item from 所持品リスト: {item.商品名}");
+                continue;
+            }
+
+            if (items == 倉庫アイテムリスト && item.在庫 == 0)
+            {
+                itemsToRemove.Add(item);
+                Debug.Log($"Removing item from 倉庫リスト: {item.商品名}");
+                continue;
+            }
+
+            // UIの更新
             var row = Instantiate(itemPrefab, content);
             row.gameObject.SetActive(true);
 
@@ -206,22 +247,19 @@ public class InventoryManager : MonoBehaviour
             var button = row.GetComponent<Button>();
             if (button != null)
             {
-                // ボタンにクリックイベントを設
-                if(items == 所持品アイテムリスト)
+                if (items == 所持品アイテムリスト)
                 {
                     button.onClick.AddListener(() => OnItemClick(item, 1));
                 }
-                if(items == 倉庫アイテムリスト)
+                else if (items == 倉庫アイテムリスト)
                 {
                     button.onClick.AddListener(() => OnItemClick(item, 2));
                 }
-                if(items == 陳列棚アイテムリスト)
+                else if (items == 陳列棚アイテムリスト)
                 {
                     button.onClick.AddListener(() => OnItemClick(item, 3));
                 }
-                
             }
-
 
             // アイコンの設定
             var itemImage = row.transform.Find("アイコン");
@@ -234,14 +272,14 @@ public class InventoryManager : MonoBehaviour
                 }
             }
 
-            // 商品名の設定（TextMeshProUGUI）
+            // 商品名の設定
             var itemNameText = row.transform.Find("商品名").GetComponent<TextMeshProUGUI>();
             if (itemNameText != null)
             {
                 itemNameText.text = item.商品名 ?? "Unknown Item";
             }
 
-            // 在庫の設定（TextMeshProUGUI）
+            // 在庫や所持数の設定
             var stockText = row.transform.Find("在庫").GetComponent<TextMeshProUGUI>();
             if (stockText != null)
             {
@@ -254,20 +292,27 @@ public class InventoryManager : MonoBehaviour
                     stockText.text = item.在庫 != 0 ? $" {item.在庫}" : "在庫なし";
                 }
             }
-            // 相場価格の設定（TextMeshProUGUI）
+
+            // 相場価格の設定
             var priceText = row.transform.Find("相場価格").GetComponent<TextMeshProUGUI>();
             if (priceText != null)
             {
                 priceText.text = item.相場価格 != 0 ? item.相場価格.ToString() : "相場価格未設定";
             }
 
-            // 需要の設定（TextMeshProUGUI）
+            // 需要の設定
             var demandText = row.transform.Find("需要").GetComponent<TextMeshProUGUI>();
             if (demandText != null)
             {
-                demandText.text = item.需要 != 0 ? item.需要.ToString() +"%" : "需要未設定";
+                demandText.text = item.需要 != 0 ? item.需要.ToString() + "%" : "需要未設定";
             }
         }
 
+        // リストから削除対象を一括削除
+        foreach (var itemToRemove in itemsToRemove)
+        {
+            items.Remove(itemToRemove);
+        }
     }
+
 }

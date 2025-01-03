@@ -24,6 +24,8 @@ public class PopupManager : MonoBehaviour
     private List<BaseItem> 所持品アイテムリスト;
     private List<BaseItem> 倉庫アイテムリスト;
     private List<BaseItem> 陳列棚アイテムリスト;
+    // ポップアップが閉じられたときのイベント
+    public event System.Action OnPopupClosed;
 
     public void InitializeLists(
         List<BaseItem> 所持品リスト, List<BaseItem> 倉庫リスト, List<BaseItem> 陳列棚リスト)
@@ -39,8 +41,6 @@ public class PopupManager : MonoBehaviour
         // ボタンのクリックイベントを紐付け
         増加ボタン.onClick.AddListener(IncrementAmount);
         減少ボタン.onClick.AddListener(DecrementAmount);
-        倉庫へ移動ボタン.onClick.AddListener(MoveToStorage);
-        陳列棚へ移動ボタン.onClick.AddListener(MoveToShelf);
         バツボタン.onClick.AddListener(ClosePopup);
         
     }
@@ -63,6 +63,10 @@ public class PopupManager : MonoBehaviour
         移動量_入力欄.text = 移動量.ToString();
         初期入力相場価格 = item.相場価格;
         陳列棚_価格設定_入力欄.text = 初期入力相場価格.ToString(); // 値段設定を初期化
+
+         // 全てのボタンの既存リスナーを削除
+        倉庫へ移動ボタン.onClick.RemoveAllListeners();
+        陳列棚へ移動ボタン.onClick.RemoveAllListeners();
 
         // ボタン表示を切り替え
         switch (listType)
@@ -88,7 +92,7 @@ public class PopupManager : MonoBehaviour
                 break;
 
             case 3: // 陳列棚アイテムリスト
-                陳列棚へ移動ボタン.GetComponentInChildren<TextMeshProUGUI>().text = "陳列棚から降ろす";
+                陳列棚へ移動ボタン.GetComponentInChildren<TextMeshProUGUI>().text = "陳列する";
                 倉庫へ移動ボタン.gameObject.SetActive(false);
                 陳列棚へ移動ボタン.gameObject.SetActive(true);
 
@@ -133,47 +137,45 @@ public class PopupManager : MonoBehaviour
 
 
     // 倉庫に移動
-    public void MoveToStorage()
+public void MoveToStorage()
+{
+    if (アイテム == null)
     {
-        if (アイテム == null)
+        Debug.LogError("アイテムが設定されていません！");
+        return;
+    }
+
+    if (アイテム.所持数 >= 移動量)
+    {
+        int newStock = アイテム.在庫 + 移動量;
+
+        if (newStock > アイテム.在庫最大数)
         {
-            Debug.LogError("アイテムが設定されていません！");
-            return;
-        }
+            // 在庫最大数を超えた場合の処理
+            int actualTransfer = アイテム.在庫最大数 - アイテム.在庫; // 実際に移動可能な数量
+            アイテム.所持数 -= actualTransfer;
+            アイテム.在庫 = アイテム.在庫最大数;
 
-        if (アイテム.所持数 >= 移動量)
-        {
-            int newStock = アイテム.在庫 + 移動量;
-
-            if (newStock > アイテム.在庫最大数)
-            {
-                // 在庫最大数を超えた場合の処理
-                int actualTransfer = アイテム.在庫最大数 - アイテム.在庫; // 実際に移動可能な数量
-                アイテム.所持数 -= actualTransfer;
-                アイテム.在庫 = アイテム.在庫最大数;
-
-                Debug.LogWarning($"アイテム {アイテム.商品名} の在庫数が最大値を超えるため、一部のみ移動されました。移動量: {actualTransfer}");
-            }
-            else
-            {
-                // 在庫最大数を超えない場合
-                アイテム.所持数 -= 移動量;
-                アイテム.在庫 += 移動量;
-
-                Debug.Log($"アイテム {アイテム.商品名} を倉庫に {移動量} 移動しました。");
-            }
-            if (アイテム.所持数 == 0)
-            {
-                所持品アイテムリスト.Remove(アイテム);
-            }
-
-            UpdateUI();
+            Debug.LogWarning($"アイテム {アイテム.商品名} の在庫数が最大値を超えるため、一部のみ移動されました。移動量: {actualTransfer}");
         }
         else
         {
-            Debug.LogWarning("移動数量が不足しています。");
+            // 在庫最大数を超えない場合
+            アイテム.所持数 -= 移動量;
+            アイテム.在庫 += 移動量;
+
+            Debug.Log($"アイテム {アイテム.商品名} を倉庫に {移動量} 移動しました。");
         }
+
+
+        UpdateUI(); // UI更新
     }
+    else
+    {
+        Debug.LogWarning("移動数量が不足しています。");
+    }
+}
+
     // 所持品へ移動（倉庫から）
     public void MoveToInventory()
     {
@@ -201,12 +203,6 @@ public class PopupManager : MonoBehaviour
                 アイテム.所持数 += 移動量;
 
                 Debug.Log($"アイテム {アイテム.商品名} を所持品に {移動量} 移動しました。");
-            }
-
-            // 在庫がゼロの場合リストから削除
-            if (アイテム.在庫 == 0)
-            {
-                倉庫アイテムリスト.Remove(アイテム);
             }
 
             UpdateUI();
@@ -254,6 +250,7 @@ public class PopupManager : MonoBehaviour
     public void ClosePopup()
     {
         アイテム出し入れポップアップ.SetActive(false);
+        OnPopupClosed?.Invoke();
     }
 
     private void UpdateUI()
