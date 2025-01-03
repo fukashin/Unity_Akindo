@@ -18,6 +18,7 @@ MonoBehaviour:
   totalMaintenanceCost: 0
   popularity: 0
   money: 0
+  Chinretu_Dana_Max: 2
   currentRank: 0
   previousRank: 0
   currentRevenue: 0

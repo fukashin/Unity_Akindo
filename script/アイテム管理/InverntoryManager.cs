@@ -79,8 +79,8 @@ public class InventoryManager : MonoBehaviour
 
         // アイテム追加ボタンのクリックイベントを設定
         AddToInventoryButton.onClick.AddListener(() => AddItemToList(所持品アイテムリスト, 1, 1));
-        AddToStorageButton.onClick.AddListener(() => AddItemToList(倉庫アイテムリスト, 2, 1));
-        AddToShelfButton.onClick.AddListener(() => AddItemToList(陳列棚アイテムリスト, 3, 1));
+        AddToStorageButton.onClick.AddListener(() => AddItemToList(所持品アイテムリスト, 2, 1));
+        AddToShelfButton.onClick.AddListener(() => AddItemToList(所持品アイテムリスト, 3, 1));
 
         // PopupManager のイベントを購読
         popupManager.OnPopupClosed += HandlePopupClosed;
@@ -287,9 +287,13 @@ public class InventoryManager : MonoBehaviour
                 {
                     stockText.text = item.所持数 != 0 ? $" {item.所持数}" : "所持数なし";
                 }
-                else
+                else if(items == 倉庫アイテムリスト)
                 {
                     stockText.text = item.在庫 != 0 ? $" {item.在庫}" : "在庫なし";
+                }
+                else if(items == 陳列棚アイテムリスト)
+                {
+                    stockText.text = item.陳列数 != 0 ? $" {item.陳列数}" : "陳列数なし";
                 }
             }
 
@@ -297,7 +301,14 @@ public class InventoryManager : MonoBehaviour
             var priceText = row.transform.Find("相場価格").GetComponent<TextMeshProUGUI>();
             if (priceText != null)
             {
-                priceText.text = item.相場価格 != 0 ? item.相場価格.ToString() : "相場価格未設定";
+                if (items == 陳列棚アイテムリスト)
+                {
+                    priceText.text = item.陳列価格 != 0 ? $" {item.陳列価格}" : "価格設定なし";
+                }
+                else
+                {
+                    priceText.text = item.相場価格 != 0 ? item.相場価格.ToString() : "相場価格未設定";
+                }
             }
 
             // 需要の設定

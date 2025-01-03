@@ -20,6 +20,7 @@ public class BaseItem : ScriptableObject, IComparable<BaseItem>
     public string 説明欄;        // 説明欄
     public ItemType アイテムタイプ;
     public int 相場価格;            // 価格
+    public int 陳列価格;
     public int 需要;            // 需要
     private bool 耐久値有無;    //耐久値の有無
     public int 耐久値;          //耐久値
@@ -27,8 +28,9 @@ public class BaseItem : ScriptableObject, IComparable<BaseItem>
     public int 在庫; //在庫数
     public int 所持数; // 所持数を追加
     public int 陳列数; // 陳列数を追加
-    public int 在庫最大数; // 在庫数の最大数
-    public int 所持最大数;  // 所持数の最大値
+    public int 在庫最大数=10; // 在庫数の最大数
+    public int 所持最大数=100;  // 所持数の最大値
+    public int 陳列削除フラグ;
 
 
     public BaseItem Initialize(string 商品名, int 在庫, int 相場価格, int 需要)

@@ -84,6 +84,7 @@ public class PopupManager : MonoBehaviour
                 陳列棚へ移動ボタン.gameObject.SetActive(true);
                 陳列棚へ移動ボタン.GetComponentInChildren<TextMeshProUGUI>().text = "陳列棚へ移動";
                 倉庫へ移動ボタン.onClick.AddListener(() => MoveToStorage());
+                陳列棚へ移動ボタン.onClick.AddListener(() => MoveToShelf());
                 Debug.Log("所持アイテムリスト");
                 break;
 
@@ -95,11 +96,12 @@ public class PopupManager : MonoBehaviour
 
                 倉庫へ移動ボタン.onClick.RemoveAllListeners();
                 倉庫へ移動ボタン.onClick.AddListener(() => MoveToInventory());
+                陳列棚へ移動ボタン.onClick.AddListener(() => MoveToShelf());
                 Debug.Log("倉庫リスト");
                 break;
 
             case 3: // 陳列棚アイテムリスト
-                陳列棚へ移動ボタン.GetComponentInChildren<TextMeshProUGUI>().text = "陳列する";
+                陳列棚へ移動ボタン.GetComponentInChildren<TextMeshProUGUI>().text = "陳列をやめる";
                 倉庫へ移動ボタン.gameObject.SetActive(false);
                 陳列棚へ移動ボタン.gameObject.SetActive(true);
 
@@ -240,12 +242,48 @@ public void MoveToStorage()
     // 陳列棚に移動
     public void MoveToShelf()
     {
+        // ShopData を取得
+        ShopData shopData = Resources.Load<ShopData>("ShopData");
+        if (shopData == null)
+        {
+            Debug.LogError("ShopData が見つかりません！");
+            return;
+        }
+
+        // 陳列棚にあるアイテムの種類数を取得
+        int totalShelfTypes = 陳列棚アイテムリスト.Count;
+
+        // 陳列棚に同じアイテムが存在するか確認
+        var existingItem = 陳列棚アイテムリスト.Find(x => x.ID == アイテム.ID);
+
+        // 新しい種類を追加する場合に種類数をチェック
+        if (existingItem == null && totalShelfTypes >= shopData.Chinretu_Dana_Max)
+        {
+            Debug.LogWarning($"陳列棚の種類数が最大値 ({shopData.Chinretu_Dana_Max}) を超えるため、新しいアイテムを追加できません！");
+            return;
+        }
+
+        // 移動量と価格の入力をチェック
         if (int.TryParse(陳列棚_価格設定_入力欄.text, out int price) && アイテム.所持数 >= 移動量)
         {
+            if (existingItem != null)
+            {
+                // 既存のアイテムがある場合、陳列数を増加し価格を更新
+                existingItem.陳列数 += 移動量;
+                existingItem.陳列価格 = price;
+                Debug.Log($"既存のアイテム {existingItem.商品名} の陳列数を {移動量} 増加しました。新価格: {price}");
+            }
+            else
+            {
+                // 新しいアイテムを陳列棚に追加
+                アイテム.陳列数 = 移動量;
+                アイテム.陳列価格 = price;
+                陳列棚アイテムリスト.Add(アイテム);
+                Debug.Log($"アイテム {アイテム.商品名} を陳列棚に新たに追加しました。数量: {移動量}, 価格: {price}");
+            }
+
+            // 所持数を減少
             アイテム.所持数 -= 移動量;
-            アイテム.在庫 += 移動量; // 必要に応じて在庫を操作
-            アイテム.相場価格 = price;
-            Debug.Log($"アイテム {アイテム.商品名} を陳列棚に {移動量} 移動しました。価格: {price}");
             UpdateUI();
         }
         else
