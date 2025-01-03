@@ -17,8 +17,8 @@ MonoBehaviour:
   "\u4EF2\u9593":
   - {fileID: 11400000, guid: 35af8de83dafd564b9010fcf88c23a75, type: 2}
   "\u4E3B\u4EBA\u516C\u306E\u4F4D\u7F6E":
-  - x: 0
+  - x: 7
     y: 0
   "\u4EF2\u9593\u306E\u4F4D\u7F6E":
-  - x: 0
-    y: 0
+  - x: 7
+    y: 1

@@ -7,8 +7,11 @@ namespace soubiSystem  // 装備関連の名前空間に変更
     public class EquipItem : BaseItem
     {
         public EquipCategory category;
-        public WeaponCategory weaponCategory; 
+        public WeaponCategory weaponCategory;
         public int 攻撃力;              // 装備の攻撃力
+
+        public AttackRange Range = new AttackRange { MinRange = 1, MaxRange = 1, IsArea = false }; // 武器固有の攻撃範囲 デフォルトは範囲１の範囲攻撃×
+
         public int 防御力;              // 装備の防御力
         public int 耐久力;              // 装備の耐久力
         public int 魔法力;              // 装備の魔法力
@@ -42,4 +45,13 @@ namespace soubiSystem  // 装備関連の名前空間に変更
         大剣,  // 大剣など（近接の一種）
         短剣  // 短剣など（近接の一種）
     }
+
+    [System.Serializable]
+    public class AttackRange
+    {
+        public int MinRange; // 最小範囲
+        public int MaxRange; // 最大範囲
+        public bool IsArea;  // 範囲攻撃かどうか
+    }
 }
+

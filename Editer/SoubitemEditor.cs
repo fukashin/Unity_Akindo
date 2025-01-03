@@ -54,6 +54,17 @@ public class EquipItemEditor : Editor
             equipItem.耐久力 = EditorGUILayout.IntField("耐久力", equipItem.耐久力);
         }
 
+        //装備カテゴリーが「武器」のときだけ、攻撃範囲設定を表示
+        if (equipItem.category == EquipItem.EquipCategory.武器)
+        {
+            EditorGUILayout.LabelField("攻撃範囲設定", EditorStyles.boldLabel);
+
+            equipItem.Range.MinRange = EditorGUILayout.IntField("最小範囲", equipItem.Range.MinRange);
+            equipItem.Range.MaxRange = EditorGUILayout.IntField("最大範囲", equipItem.Range.MaxRange);
+            equipItem.Range.IsArea = EditorGUILayout.Toggle("範囲攻撃", equipItem.Range.IsArea);
+        }
+
+
         // その他のフィールド設定
         equipItem.相場価格 = EditorGUILayout.IntField("相場価格", equipItem.相場価格);
         equipItem.需要 = EditorGUILayout.IntField("需要", equipItem.需要);
