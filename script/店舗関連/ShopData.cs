@@ -14,6 +14,7 @@ public class ShopData : ScriptableObject
     public int totalMaintenanceCost;      // 総維持費
     public int popularity; // 人気度（0～100）
     public float money; //店舗資金　（プレイヤー資金）
+    public int Chinretu_Dana_Max = 1; //陳列棚初期値
 
     [Header("順位情報")]
     public int currentRank; // 暫定順位

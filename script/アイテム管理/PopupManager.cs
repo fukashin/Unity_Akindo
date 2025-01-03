@@ -21,19 +21,26 @@ public class PopupManager : MonoBehaviour
     private int 移動量 = 1; // 現在の移動数量
     private int 初期入力相場価格 =1; //初期入力で入る相場価格
     public Button バツボタン;
-    private List<BaseItem> 所持品アイテムリスト;
-    private List<BaseItem> 倉庫アイテムリスト;
-    private List<BaseItem> 陳列棚アイテムリスト;
+    //リストをInverntoryManagerに依存する
+    public InventoryManager inventoryManager;
+    private List<BaseItem> 倉庫アイテムリスト => inventoryManager.倉庫アイテムリスト;
+    private List<BaseItem> 所持品アイテムリスト => inventoryManager.所持品アイテムリスト;
+    private List<BaseItem> 陳列棚アイテムリスト => inventoryManager.陳列棚アイテムリスト;
     // ポップアップが閉じられたときのイベント
     public event System.Action OnPopupClosed;
 
-    public void InitializeLists(
-        List<BaseItem> 所持品リスト, List<BaseItem> 倉庫リスト, List<BaseItem> 陳列棚リスト)
+    private void Awake()
     {
-        所持品アイテムリスト = 所持品リスト;
-        倉庫アイテムリスト = 倉庫リスト;
-        陳列棚アイテムリスト = 陳列棚リスト;
+        if (inventoryManager == null)
+        {
+            inventoryManager = FindObjectOfType<InventoryManager>();
+            if (inventoryManager == null)
+            {
+                Debug.LogError("InventoryManager がシーン内に存在しません！");
+            }
+        }
     }
+
 
 
     private void Start()
@@ -166,6 +173,14 @@ public void MoveToStorage()
 
             Debug.Log($"アイテム {アイテム.商品名} を倉庫に {移動量} 移動しました。");
         }
+        Debug.Log($"{倉庫アイテムリスト.Contains(アイテム)}aaaaaaaaaaaaaaaaaaaaaaaa");
+
+        // 倉庫リストにアイテムが存在しない場合、登録
+        if (!倉庫アイテムリスト.Contains(アイテム))
+        {
+            倉庫アイテムリスト.Add(アイテム);
+            Debug.Log($"アイテム {アイテム.商品名} を倉庫リストに追加しました。");
+        }
 
 
         UpdateUI(); // UI更新
@@ -203,6 +218,14 @@ public void MoveToStorage()
                 アイテム.所持数 += 移動量;
 
                 Debug.Log($"アイテム {アイテム.商品名} を所持品に {移動量} 移動しました。");
+            }
+            
+
+            // 所持リストにアイテムが存在しない場合、登録
+            if (!所持品アイテムリスト.Contains(アイテム))
+            {
+                所持品アイテムリスト.Add(アイテム);
+                Debug.Log($"アイテム {アイテム.商品名} を所持品アイテムリストに追加しました。");
             }
 
             UpdateUI();

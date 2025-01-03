@@ -26,6 +26,7 @@ public class BaseItem : ScriptableObject, IComparable<BaseItem>
     public Sprite 商品画像;     // 商品画像
     public int 在庫; //在庫数
     public int 所持数; // 所持数を追加
+    public int 陳列数; // 陳列数を追加
     public int 在庫最大数; // 在庫数の最大数
     public int 所持最大数;  // 所持数の最大値
 
