@@ -5,6 +5,9 @@ using System.Linq;
 
 public class CharaController : MonoBehaviour
 {
+
+    public static CharaController Instance { get; private set; }
+
     [Header("通常の移動速度")]
     public float speed = 3.0f;              // 通常の移動速度
     [Header("走るときの速度倍率")]
@@ -28,6 +31,23 @@ public class CharaController : MonoBehaviour
     [Header("プレイヤーパーティデータ")]
     public PartyData playerPartyData;      // プレイヤーパーティデータの設定
 
+    [HideInInspector]
+    public EnemyPartyData enemyPartyData;
+
+    // インスタンス初期化
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;  // インスタンスを設定
+            DontDestroyOnLoad(gameObject);  // シーン遷移後も保持
+        }
+        else
+        {
+            Destroy(gameObject);  // 既存のインスタンスがあれば、このオブジェクトを削除
+        }
+    }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();   // Rigidbody2D の取得
@@ -36,6 +56,7 @@ public class CharaController : MonoBehaviour
         // Rigidbody2D 設定の確認
         rb.linearDamping = 0f;              // 抵抗値を無効化
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
     }
 
     void Update()
@@ -113,8 +134,8 @@ public class CharaController : MonoBehaviour
                     Debug.Log("Encountered: " + enemy.enemyName);
                 }
 
-                // BattleManagerにパーティデータを設定
-                BattleManager.Instance.SetPartyData(playerPartyData, selectedEnemyParty);
+                CharaController.Instance.playerPartyData = playerPartyData;
+                CharaController.Instance.enemyPartyData = selectedEnemyParty;
 
                 // 戦闘シーンへ移行
                 SceneManager.LoadScene("戦闘シーン");

@@ -19,6 +19,7 @@ public class NCData : UnitData
         Unitname = NCName; // 基底クラスのUnitnameにキャラクターの名前を設定
         HP = currentHP;           //基底クラスのHPにキャラクターの現在の体力を設定
         Unitagility = agility;    //基底クラスのアジリティに、キャラクターデータのアジリティを設定
+        Sprite Icon = characterIcon;
     }
 
     [Header("ステータス")]

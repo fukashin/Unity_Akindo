@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using soubiSystem;
 
 [CreateAssetMenu(fileName = "NewEnemyData", menuName = "戦闘/敵モンスター情報")]
 public class EnemyData : UnitData
@@ -26,9 +27,15 @@ public class EnemyData : UnitData
         Unitname = enemyName; // 基底クラスのUnitnameにモンスター名を設定
         HP = health;           //基底クラスのHPにモンスターの体力を設定
         Unitagility = agility;    //基底クラスのアジリティに、モンスターのアジリティを設定
-    }
+        Sprite Icon = enemyImage;
+}
 
- 
+    public AttackRange EnemyAttackRange; //攻撃範囲
+
+    public override AttackRange GetAttackRange()
+    {
+        return EnemyAttackRange;
+    }
 
     [Header("戦利品リスト")]
     public List<LootItem> lootItems;       // 戦利品のリスト

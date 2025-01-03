@@ -59,6 +59,7 @@ public class CharacterData : UnitData
         Unitname = characterName; // 基底クラスのUnitnameにキャラクターの名前を設定
         HP = currentHP;           //基底クラスのHPにキャラクターの現在の体力を設定
         Unitagility = agility;    //基底クラスのアジリティに、キャラクターデータのアジリティを設定
+        Sprite Icon = characterIcon;
     }
 
     [Header("装備品一覧")]
@@ -74,6 +75,7 @@ public class CharacterData : UnitData
     [HideInInspector] public int totalDefense;
     [HideInInspector] public int totalHP;
     [HideInInspector] public int totalMP;
+
 
     // カテゴリごとの装備品を取得
     public EquipItem GetEquippedItemByCategory(EquipItem.EquipCategory category)
@@ -127,6 +129,7 @@ public class CharacterData : UnitData
                 break;
         }
         UpdateStatsFromEquipments(); // 装備変更後にステータスを更新
+        UpdateEquippedWeapon(); //装備変更後に攻撃範囲変更
     }
 
     // 装備品の影響をステータスに反映させる
@@ -195,6 +198,8 @@ public class CharacterData : UnitData
         }
     }
 
+    //行動値に関する設定
+
     [Header("初期行動力")]
     public int currentWorkpower;         // 現在の行動力
     [Header("回復間隔毎のの回復量")]
@@ -203,6 +208,16 @@ public class CharacterData : UnitData
     public float recoveryInterval = 1; // 回復間隔（秒）: 300秒 = 5分
     private DateTime lastRecoveryTime;   // 最後に回復した時刻
 
+
+    //装備品（武器）による攻撃範囲の取得
+    public void UpdateEquippedWeapon()
+    {
+        if (武器 != null)
+        {
+            // 武器の攻撃範囲を取得
+            AttackRange attackRange = 武器.Range;
+        }
+    }
 
     // 次のレベルに必要な経験値を計算するメソッド
     public int GetXPToNextLevel()
@@ -223,7 +238,7 @@ public class CharacterData : UnitData
     }
 
 
-
+    //行動値の時間経過による回復
     public void UpdateWorkpower()
     {
         // 最初の呼び出し時にlastRecoveryTimeが初期化されていない場合があるので確認
@@ -255,6 +270,7 @@ public class CharacterData : UnitData
         UpdateWorkpower();
 
         lastRecoveryTime = DateTime.Now;
+
     }
 
     public void ConsumeWorkpower(int amount)
@@ -286,13 +302,19 @@ public class CharacterData : UnitData
         }
     }
 
-    public override void TakeTurn()
-    {
-        base.TakeTurn();  // 基本的なターン処理を呼び出し（IsDead のチェックなど）
+    //// 各キャラクターごとの行動メソッド（仮想メソッド）
+    //public virtual void TakeTurn(UnitData[,] battleGrid)
+    //{
+    //    // デフォルトのターン処理
+    //    if (IsDead) return;  // 死んでいる場合はターンを取らない
 
-        if (IsDead) return;
-        // キャラクターのターン処理をここで実装
-    }
+    //    // 移動
+    //    //MoveToTarget(battleGrid);
 
+    //    // 攻撃
+    //    //AttackTarget(battleGrid);
+
+    //    // 行動後に次のターンのカウントを設定
+    //}
 
 }

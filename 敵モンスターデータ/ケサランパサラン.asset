@@ -12,12 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f2e8fb7b19c5d4b8352a772f997693, type: 3}
   m_Name: "\u30B1\u30B5\u30E9\u30F3\u30D1\u30B5\u30E9\u30F3"
   m_EditorClassIdentifier: 
+  Unitname: "\u30B1\u30B5\u30E9\u30F3\u30D1\u30B5\u30E9\u30F3"
+  Unitagility: 10
+  HP: 100
+  Icon: {fileID: 4788766575322829229, guid: 3f42d5b34dcc2574abc2c1b8eb5341f3, type: 3}
+  nextActionTime: 20
+  MoveRange: 3
+  unitType: 1
+  currentX: 0
+  currentY: 0
+  targetUnit: {fileID: 0}
   enemyName: "\u30B1\u30B5\u30E9\u30F3\u30D1\u30B5\u30E9\u30F3"
   health: 100
   experiencePoints: 20
   enemyImage: {fileID: 4788766575322829229, guid: 3f42d5b34dcc2574abc2c1b8eb5341f3,
     type: 3}
   agility: 10
+  EnemyAttackRange:
+    MinRange: 0
+    MaxRange: 0
+    IsArea: 0
   lootItems:
   - item: {fileID: 11400000, guid: 1d28358b20410804890a9224153232ee, type: 2}
     quantity: 1

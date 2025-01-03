@@ -33,7 +33,7 @@ public class IDManager : ScriptableObject
         // PlayerPrefsへの保存を削除（IDはIDManagerで管理する）
         // アイテムリストをリセットして、ResourcesからすべてのBaseItemを取得
         //アイテムリスト = Resources.FindObjectsOfTypeAll<BaseItem>().ToList();
-        Debug.Log($"アイテムリストのサイズ: {アイテムリスト.Count}");
+        //Debug.Log($"アイテムリストのサイズ: {アイテムリスト.Count}");    毎回コンパイルのたびにログ出るのうざいからコメントアウト
     }
 
     // 新しいIDを取得

@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0a43969c7eae34c81b598c06ded9e3, type: 3}
   m_Name: NewNCData
   m_EditorClassIdentifier: 
-  Unitname: 
-  Unitagility: 0
-  HP: 0
+  Unitname: "\u30AD\u30E3\u30E998"
+  Unitagility: 6
+  HP: 53
+  Icon: {fileID: 617720945, guid: be9c66231c3247040a97b48b6b0ef5ca, type: 3}
+  nextActionTime: 6
   NCName: "\u30AD\u30E3\u30E998"
   maxHP: 161
   currentHP: 53
@@ -29,9 +31,10 @@ MonoBehaviour:
   baseXP: 100
   growthRate: 1.2385283
   skills: []
-  inventory: []
+  inventory:
+  - {fileID: 0}
   maxInventorySize: 5
-  "\u6B66\u5668": {fileID: 0}
+  "\u6B66\u5668": {fileID: 11400000, guid: 7cb21ddbb59a9b84c81e3ca3dd0bc3b2, type: 2}
   "\u982D\u88C5\u5099": {fileID: 0}
   "\u80F4\u4F53\u88C5\u5099": {fileID: 0}
   "\u811A\u88C5\u5099": {fileID: 0}

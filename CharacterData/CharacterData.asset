@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0494fc403bd9024796c7a1134dc114d, type: 3}
   m_Name: CharacterData
   m_EditorClassIdentifier: 
+  Unitname: "\u30F4\u30A1\u30EB"
+  Unitagility: 10
+  HP: 50
+  Icon: {fileID: -3126399388404282784, guid: 70278c088abeacc449093338ef2741b8, type: 3}
+  nextActionTime: 30
   characterName: "\u30F4\u30A1\u30EB"
   maxHP: 100
   currentHP: 50
@@ -20,7 +25,8 @@ MonoBehaviour:
   defensePower: 10
   agility: 10
   workpower: 100
-  characterIcon: {fileID: 0}
+  characterIcon: {fileID: -3126399388404282784, guid: 70278c088abeacc449093338ef2741b8,
+    type: 3}
   prefab: {fileID: 0}
   level: 1
   currentXP: 0
