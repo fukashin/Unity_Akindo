@@ -1011,6 +1011,7 @@ MonoBehaviour:
   "\u9673\u5217\u68DA\u3078\u79FB\u52D5\u30DC\u30BF\u30F3": {fileID: 1926625964}
   "\u9673\u5217\u68DA_\u4FA1\u683C\u8A2D\u5B9A_\u5165\u529B\u6B04": {fileID: 1738901396}
   "\u30D0\u30C4\u30DC\u30BF\u30F3": {fileID: 597137245}
+  inventoryManager: {fileID: 722407615}
 --- !u!1 &304765220
 GameObject:
   m_ObjectHideFlags: 0
