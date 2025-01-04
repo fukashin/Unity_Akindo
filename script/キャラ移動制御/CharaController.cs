@@ -34,6 +34,9 @@ public class CharaController : MonoBehaviour
     [HideInInspector]
     public EnemyPartyData enemyPartyData;
 
+    [HideInInspector]
+    public string 街北平野; // キャラが表示されるシーン名
+
     // インスタンス初期化
     private void Awake()
     {
@@ -50,6 +53,10 @@ public class CharaController : MonoBehaviour
 
     private void Start()
     {
+
+        // シーンが変更された時に呼ばれるイベントに登録 フィールドシーン以外では非表示になるように。
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         rb = GetComponent<Rigidbody2D>();   // Rigidbody2D の取得
         anim = GetComponent<Animator>();    // Animator の取得
 
@@ -96,6 +103,42 @@ public class CharaController : MonoBehaviour
         rb.linearVelocity = inputAxis.normalized * currentSpeed;
     }
 
+    //ほかのシーンでキャラが歩くの防止用
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // シーン名を確認して表示/非表示を切り替える
+        gameObject.SetActive(scene.name == 街北平野);
+
+        // 新しいシーンの読み込み後に複製して保持
+        if (scene.name != "街北平野")
+        {
+            // 現在のオブジェクトを複製
+            GameObject duplicate = Instantiate(gameObject);
+
+            // 複製されたオブジェクトを新しいシーンに移動
+            DontDestroyOnLoad(duplicate);
+
+            // 複製オブジェクトのカメラ追従を設定
+            //Camera.main.GetComponent<CameraFollow>().SetTarget(duplicate.transform);
+
+            // 元のオブジェクトは新しいシーンには不要なので削除
+            Destroy(gameObject);
+        }
+        else
+        {
+            // 街北平野のシーンではカメラ追従を元に戻す
+            Camera.main.GetComponent<CameraFollow>().SetTarget(gameObject.transform);
+        }
+
+    }
+
+    //上の解除用
+    void OnDestroy()
+    {
+        // イベント登録解除
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     public void setAnim(Vector2 vec2)
     {
         if (vec2 == Vector2.zero)
@@ -107,12 +150,6 @@ public class CharaController : MonoBehaviour
         anim.speed = 1.0f;        // アニメーションを再生
         anim.SetFloat("X", vec2.x);
         anim.SetFloat("Y", vec2.y);
-    }
-
-    private CharacterData GetPlayerData()
-    {
-        // PartyData から主人公のデータを取得
-        return playerPartyData.主人公.FirstOrDefault();  // 最初の主人公を取得
     }
 
     void TriggerEncounter()

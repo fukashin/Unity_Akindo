@@ -106,6 +106,7 @@ public abstract class UnitData : ScriptableObject
                 break;
         }
     }
+
     public void OnMoveButtonPressed()
     {
         if (playerTurnState == PlayerTurnState.Waiting)

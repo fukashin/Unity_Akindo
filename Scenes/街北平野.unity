@@ -1875,7 +1875,7 @@ MonoBehaviour:
   speed: 3
   runMultiplier: 1.5
   encounterDistance: 5
-  encounterProbability: 0.5
+  encounterProbability: 0
   enemyPartyPool:
   - {fileID: 11400000, guid: b3d9fa58a51e64148af0710ac891b74a, type: 2}
   playerPartyData: {fileID: 11400000, guid: 12a8024bd7ddc3046aa9949a3c1eee24, type: 2}

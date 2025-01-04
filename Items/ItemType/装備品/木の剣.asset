@@ -17,18 +17,25 @@ MonoBehaviour:
   "\u8AAC\u660E\u6B04": 
   "\u30A2\u30A4\u30C6\u30E0\u30BF\u30A4\u30D7": 1
   "\u76F8\u5834\u4FA1\u683C": 0
+  "\u9673\u5217\u4FA1\u683C": 0
   "\u9700\u8981": 0
   "\u8010\u4E45\u5024": 0
   "\u5546\u54C1\u753B\u50CF": {fileID: 17777046994564878, guid: ab95e2043b9350f478f7444fe2e39848,
     type: 3}
   "\u5728\u5EAB": 0
   "\u6240\u6301\u6570": 0
+  "\u9673\u5217\u6570": 0
   "\u5728\u5EAB\u6700\u5927\u6570": 0
   "\u6240\u6301\u6700\u5927\u6570": 0
+  "\u9673\u5217\u524A\u9664\u30D5\u30E9\u30B0": 0
   "\u5FC5\u8981\u7D20\u6750": []
   category: 0
   weaponCategory: 0
   "\u653B\u6483\u529B": 1
+  Range:
+    MinRange: 1
+    MaxRange: 1
+    IsArea: 0
   "\u9632\u5FA1\u529B": 0
   "\u8010\u4E45\u529B": 10
   "\u9B54\u6CD5\u529B": 0

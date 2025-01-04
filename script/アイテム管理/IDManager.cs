@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEditor;  // UnityEditor名前空間をインポート
 #endif
 
-//[CreateAssetMenu(fileName = "IDManager", menuName = "Item/IDManager")]
+[CreateAssetMenu(fileName = "IDManager", menuName = "Item/IDManager")]
 public class IDManager : ScriptableObject
 {
     public int currentMaxID = 0;                // 現在の最大ID
@@ -31,8 +31,8 @@ public class IDManager : ScriptableObject
     private void OnDisable()
     {
         // PlayerPrefsへの保存を削除（IDはIDManagerで管理する）
-        // アイテムリストをリセットして、ResourcesからすべてのBaseItemを取得
-        //アイテムリスト = Resources.FindObjectsOfTypeAll<BaseItem>().ToList();
+       //アイテムリストをリセットして、ResourcesからすべてのBaseItemを取得
+       アイテムリスト = Resources.FindObjectsOfTypeAll<BaseItem>().ToList();
         //Debug.Log($"アイテムリストのサイズ: {アイテムリスト.Count}");    毎回コンパイルのたびにログ出るのうざいからコメントアウト
     }
 

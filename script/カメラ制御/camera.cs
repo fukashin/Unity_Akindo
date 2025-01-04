@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour
         previousDirection = Vector3.zero; // 初期移動方向をゼロに設定
     }
 
-    void FixedUpdate() // FixedUpdate のまま
+    void FixedUpdate() 
     {
         if (target != null)
         {
@@ -71,5 +71,11 @@ public class CameraFollow : MonoBehaviour
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
             transform.position = smoothedPosition;
         }
+    }
+
+    //シーン遷移したときに、ターゲット再設定
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
     }
 }
